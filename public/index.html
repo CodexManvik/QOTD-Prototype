@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QOTD API Tester</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        #response {
+            background: #f4f4f4;
+            padding: 1rem;
+            margin-top: 1rem;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>QOTD API Tester</h1>
+
+    <div id="question-box" style="background:#eef; padding:1rem; margin-bottom:1rem; border-radius:5px;">
+        <h2 id="qTitle">Loading Question...</h2>
+        <p id="qDesc">...</p>
+        <div style="background:#fff; padding:0.5rem; margin-top:0.5rem;">
+            <strong>Hints:</strong>
+            <ul id="qHints"></ul>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Question ID</label>
+        <input type="text" id="qId" value="">
+    </div>
+
+    <div class="form-group">
+        <label>Code</label>
+        <textarea id="code" rows="5">def solve(): return "Win"</textarea>
+    </div>
+
+    <div class="form-group">
+        <label>User ID</label>
+        <input type="text" id="uId" value="browser_user">
+    </div>
+
+    <div class="form-group">
+        <label>User Output (Mock Evaluation)</label>
+        <input type="text" id="output" value="0,1">
+        <small>Needs to match expected output for "Correct" status</small>
+    </div>
+
+    <button id="submitBtn">Submit Answer</button>
+
+    <h3>Response:</h3>
+    <div id="response">Waiting...</div>
+
+    <script src="client.js"></script>
+</body>
+
+</html>
