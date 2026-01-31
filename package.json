@@ -9,7 +9,8 @@
   "type": "module",
   "scripts": {
     "start": "node src/main.js",
-    "dev": "node --watch src/main.js"
+    "dev": "node --watch src/main.js",
+    "seed": "node scripts/seed-db.js && node scripts/seed-leaderboard.js"
   },
   "keywords": [
     "nodejs",
