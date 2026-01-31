@@ -21,13 +21,14 @@ const seedLeaderboard = async () => {
         console.log('MongoDB Connected for Seeding Submissions');
 
         // Optimization: Create Indexes for Scalability
+        // Note: Commented out to avoid disk space safety checks on small Railway volumes for this demo
         // 1. Leaderboard: Sorts by score (desc) and timestamp (asc)
         await Submission.collection.createIndex({ score: -1, timestamp: 1 });
 
         // 2. Stats: Filters by questionId and status
         await Submission.collection.createIndex({ questionId: 1, status: 1 });
 
-        console.log('Database Indexes Created');
+        console.log('Database Indexes (Skipped for Seeding)');
 
         // Clear existing submissions for Leaderboard cleanliness
         await Submission.deleteMany({});

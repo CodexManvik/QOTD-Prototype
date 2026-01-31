@@ -60,7 +60,7 @@ Evaluates a user submission.
   ```
 
 ### 3. Get Leaderboard
-Returns the top 10 users sorted by Score (Descending) and Timestamp (Ascending).
+Returns the top 10 users sorted by Score (Descending) and Timestamp.
 
 - **Endpoint**: `GET /api/v1/leaderboard`
 - **Response**:
