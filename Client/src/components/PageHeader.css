@@ -1,0 +1,100 @@
+.page-header {
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-gray);
+  padding: var(--spacing-xl) var(--spacing-xl);
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--spacing-xl);
+}
+
+.header-content {
+  flex: 1;
+}
+
+.page-title {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-sm) 0;
+  line-height: var(--line-height-tight);
+}
+
+.split-text-title {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-sm) 0;
+  line-height: var(--line-height-tight);
+  display: block;
+}
+
+.page-subtitle {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: var(--line-height-normal);
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--spacing-lg) var(--spacing-base);
+  }
+
+  .page-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .timer-badge {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .timer-text {
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* Fullscreen intro overlay that shows only the SplitText title */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+  z-index: 2000;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+  opacity: 1;
+  visibility: visible;
+}
+
+.intro-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.intro-split {
+  color: var(--color-text-primary);
+  font-size: 3.5rem;
+  font-weight: 800;
+  text-align: center;
+  padding: 0 1rem;
+  line-height: 1;
+}
+
+.no-scroll {
+  overflow: hidden !important;
+}
+
+@media (max-width: 768px) {
+  .intro-split {
+    font-size: 2rem;
+  }
+}

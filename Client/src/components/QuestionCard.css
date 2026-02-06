@@ -1,0 +1,188 @@
+.question-card {
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-base);
+  overflow: hidden;
+}
+
+.card-header {
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--color-gray);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.difficulty-badge {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--border-radius-base);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  background-color: var(--color-easy);
+  color: var(--color-white);
+}
+
+.difficulty-badge.difficulty-medium {
+  background-color: var(--color-medium);
+}
+
+.difficulty-badge.difficulty-hard {
+  background-color: var(--color-hard);
+}
+
+.card-body {
+  padding: var(--spacing-xl);
+}
+
+.question-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-lg) 0;
+  line-height: var(--line-height-tight);
+}
+
+.tags-container {
+  display: flex;
+  gap: var(--spacing-base);
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.tag {
+  display: inline-block;
+  padding: var(--spacing-sm) var(--spacing-base);
+  background-color: var(--color-light-gray);
+  color: var(--color-primary-blue);
+  border-radius: var(--border-radius-base);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  border: 1px solid var(--color-gray);
+}
+
+.description {
+  margin-bottom: var(--spacing-xl);
+}
+
+.description p {
+  color: var(--color-text-primary);
+  line-height: var(--line-height-relaxed);
+  margin: 0;
+}
+
+.examples-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.section-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-lg) 0;
+}
+
+.example-block {
+  background-color: var(--color-light-gray);
+  border-radius: var(--border-radius-base);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.example-block:last-child {
+  margin-bottom: 0;
+}
+
+.example-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-base);
+}
+
+.example-item:last-child {
+  margin-bottom: 0;
+}
+
+.example-label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.example-code {
+  font-family: 'Courier New', monospace;
+  background-color: var(--color-white);
+  padding: var(--spacing-sm) var(--spacing-base);
+  border-radius: var(--border-radius-sm);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  border: 1px solid var(--color-gray);
+  overflow-x: auto;
+  display: block;
+}
+
+.example-text {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+}
+
+.hint-section {
+  border-top: 1px solid var(--color-gray);
+  padding-top: var(--spacing-lg);
+}
+
+.hint-button {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-base);
+  background: none;
+  color: var(--color-primary-blue);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  transition: color var(--transition-fast);
+}
+
+.hint-button:hover {
+  color: var(--color-primary-blue-dark);
+}
+
+.hint-button:focus-visible {
+  outline: 2px solid var(--color-primary-blue);
+  outline-offset: 2px;
+}
+
+.hint-icon-expanded {
+  transform: rotate(180deg);
+  transition: transform var(--transition-base);
+}
+
+.hint-content {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  background-color: var(--color-light-gray);
+  border-radius: var(--border-radius-base);
+  border-left: 4px solid var(--color-primary-blue);
+}
+
+.hint-content p {
+  margin: 0;
+  color: var(--color-text-primary);
+  line-height: var(--line-height-relaxed);
+}
+
+@media (max-width: 768px) {
+  .card-body {
+    padding: var(--spacing-lg);
+  }
+
+  .question-title {
+    font-size: var(--font-size-xl);
+  }
+
+  .example-code {
+    font-size: var(--font-size-xs);
+  }
+}
