@@ -103,15 +103,5 @@
             "Consider using a Min-Heap (Priority Queue).",
             "Add the head of each list to the heap, then extract the minimum and add its next node."
         ]
-    },
-    {
-        "id": "q-draft-1770388664519",
-        "title": "Draft Question for Seed",
-        "difficulty": "hard",
-        "problemStatement": "Solve Draft",
-        "sampleInput": "in",
-        "sampleOutput": "out",
-        "expectedOutput": "out",
-        "date": "2026-02-06"
     }
 ]
