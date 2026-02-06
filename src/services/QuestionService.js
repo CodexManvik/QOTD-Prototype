@@ -68,6 +68,15 @@ class QuestionService {
         if (!question) throw new Error('Question not found');
         return { id: question.id, title: question.title, solution: question.solution };
     }
+
+    async getDraftQuestions() {
+        try {
+            const fileData = await fs.readFile(DATA_PATH, 'utf-8');
+            return JSON.parse(fileData);
+        } catch (error) {
+            return [];
+        }
+    }
 }
 
 export default new QuestionService();

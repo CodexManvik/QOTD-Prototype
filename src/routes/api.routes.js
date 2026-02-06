@@ -6,6 +6,7 @@ const router = express.Router();
 
 // Question Routes
 router.get('/qotd', QuestionController.getDailyQuestion);
+router.get('/admin/questions', QuestionController.listQuestions); // New: View Drafts
 router.post('/admin/questions', QuestionController.createQuestion);
 router.post('/admin/seed', QuestionController.seedQuestions);
 router.get('/solution/:id', QuestionController.getSolution);
