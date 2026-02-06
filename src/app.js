@@ -11,8 +11,14 @@ app.use(cors());
 
 app.use(morgan('combined'));
 
+// Body Parser
 app.use(express.json());
 
+// Mock Auth
+import { mockAuth } from './middlewares/mockAuth.middleware.js';
+app.use(mockAuth);
+
+// Static Files
 app.use(express.static('public'));
 
 app.use('/api/v1', apiRoutes);

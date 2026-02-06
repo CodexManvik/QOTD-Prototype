@@ -12,6 +12,15 @@ class MongoQuestionRepository {
     async findAll() {
         return await Question.find().select('-_id -__v').lean();
     }
+
+    async create(data) {
+        const question = new Question(data);
+        return await question.save();
+    }
+
+    async getSolution(id) {
+        return await Question.findOne({ id }).select('solution').lean();
+    }
 }
 
 export default new MongoQuestionRepository();

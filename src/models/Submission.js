@@ -10,4 +10,9 @@ const submissionSchema = new mongoose.Schema({
     timestamp: { type: Date, default: Date.now }
 });
 
+// Indexes for Leaderboard and Stats performance
+submissionSchema.index({ questionId: 1, status: 1 }); // For getStats
+submissionSchema.index({ timestamp: 1, status: 1 }); // For getLeaderboard (time range + correct)
+submissionSchema.index({ userId: 1 }); // For User history lookups
+
 export default mongoose.model('Submission', submissionSchema);

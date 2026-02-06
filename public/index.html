@@ -4,13 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QOTD API Tester</title>
+    <title>QOTD API Tester Panel</title>
     <style>
         body {
-            font-family: sans-serif;
-            max-width: 800px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
             margin: 2rem auto;
             padding: 0 1rem;
+            background: #f0f2f5;
+            color: #333;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #1a73e8;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
         }
 
         .form-group {
@@ -20,75 +36,235 @@
         label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 0.9em;
         }
 
         input,
-        textarea,
-        select {
+        select,
+        textarea {
             width: 100%;
-            padding: 0.5rem;
-            margin-bottom: 0.5rem;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
         }
 
         button {
-            background: #007bff;
+            background: #1a73e8;
             color: white;
-            padding: 0.75rem 1.5rem;
+            padding: 10px 20px;
             border: none;
+            border-radius: 4px;
             cursor: pointer;
+            font-weight: 500;
         }
 
         button:hover {
-            background: #0056b3;
+            background: #1557b0;
         }
 
-        #response {
-            background: #f4f4f4;
+        button.secondary {
+            background: #6c757d;
+        }
+
+        #question-box {
+            border-left: 4px solid #1a73e8;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            color: white;
+        }
+
+        .badge-beginner {
+            background: #28a745;
+        }
+
+        .badge-intermediate {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .badge-advanced {
+            background: #dc3545;
+        }
+
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
             padding: 1rem;
-            margin-top: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        .success {
+            color: #28a745;
+            font-weight: bold;
             white-space: pre-wrap;
+            margin-top: 10px;
+        }
+
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+            white-space: pre-wrap;
+            margin-top: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f8f9fa;
         }
     </style>
 </head>
 
 <body>
-    <h1>QOTD API Tester</h1>
+    <h1>QOTD Backend Tester</h1>
 
-    <div id="question-box" style="background:#eef; padding:1rem; margin-bottom:1rem; border-radius:5px;">
-        <h2 id="qTitle">Loading Question...</h2>
-        <p id="qDesc">...</p>
-        <div style="background:#fff; padding:0.5rem; margin-top:0.5rem;">
-            <strong>Hints:</strong>
-            <ul id="qHints"></ul>
+    <!-- 1. AUTH CONTEXT -->
+    <div class="card">
+        <h3>👤 User Context</h3>
+        <div style="display: flex; gap: 10px; align-items: flex-end;">
+            <div style="flex: 2;">
+                <label>User ID</label>
+                <input type="text" id="userId" value="test-user-1">
+            </div>
+            <div style="flex: 1;">
+                <label>Role</label>
+                <select id="userRole">
+                    <option value="free">Free</option>
+                    <option value="paid">Paid</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div style="flex: 1;">
+                <button id="updateContextBtn">Update</button>
+            </div>
+        </div>
+        <p style="margin-top: 10px; font-size: 0.9em; color: #666;">
+            Current Context: <strong id="currentContextDisplay">...</strong>
+        </p>
+    </div>
+
+    <!-- 2. DAILY QUESTION -->
+    <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3>📅 Question of the Day</h3>
+            <div id="solutionSection" style="display: none;">
+                <button id="viewSolutionBtn" class="secondary">👁 View Solution</button>
+            </div>
+        </div>
+
+        <div id="loading">Loading Question...</div>
+
+        <div id="question-box" style="display: none;">
+            <h2 id="qTitle">Title</h2>
+            <span id="qDifficulty" class="badge">Diff</span>
+            <p id="qDesc">Description...</p>
+            <div style="background: #eef; padding: 10px; border-radius: 4px; margin-top: 10px;">
+                <strong>Hints:</strong>
+                <ul id="qHints" style="margin: 0; padding-left: 20px;"></ul>
+            </div>
+            <input type="hidden" id="qId">
+        </div>
+
+        <div id="solutionDisplay"
+            style="display: none; background: #fff3cd; padding: 10px; border-radius: 4px; margin-top: 10px; font-family: monospace;">
         </div>
     </div>
 
-    <div class="form-group">
-        <label>Question ID</label>
-        <input type="text" id="qId" value="">
+    <!-- 3. CODE EXECUTION -->
+    <div class="card">
+        <h3>💻 Code Execution</h3>
+        <div class="form-group">
+            <label>Language</label>
+            <select id="language">
+                <option value="python">Python</option>
+                <option value="java">Java</option>
+                <option value="javascript">JavaScript</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Code (Hint: Include expected output to pass mock)</label>
+            <textarea id="code" rows="5" style="font-family: monospace;">def solve():
+    return "expected_output"</textarea>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+            <button id="runBtn" style="background: #6f42c1;">▶ Run Code (Dry Run)</button>
+            <button id="submitBtn">✔ Submit Answer</button>
+        </div>
+
+        <div id="runResponse"></div>
+        <div id="submitResponse"></div>
     </div>
 
-    <div class="form-group">
-        <label>Code</label>
-        <textarea id="code" rows="5">def solve(): return "Win"</textarea>
+    <!-- 4. LEADERBOARD -->
+    <div class="card">
+        <h3>🏆 Leaderboard</h3>
+        <div style="display: flex; gap: 10px; margin-bottom: 1rem;">
+            <select id="lbDifficulty">
+                <option value="">All Difficulties</option>
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+            </select>
+            <button id="loadLbBtn" class="secondary">Refresh Board</button>
+        </div>
+
+        <table id="lbTable">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>User</th>
+                    <th>Score</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="4" style="text-align: center;">Click Refresh</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    <div class="form-group">
-        <label>User ID</label>
-        <input type="text" id="uId" value="browser_user">
+    <!-- 5. ADMIN UTILS -->
+    <div class="card" style="border: 2px dashed #ccc;">
+        <h3>🛠 Admin: Create Question</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <input type="text" id="admId" placeholder="Unique ID (optional)">
+            <input type="text" id="admTitle" placeholder="Title" value="New Challenge">
+            <select id="admDiff">
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+            </select>
+            <input type="text" id="admDesc" placeholder="Problem Statement" value="Solve X">
+            <input type="text" id="admIn" placeholder="Sample Input" value="1,2">
+            <input type="text" id="admOut" placeholder="Expected Output" value="3">
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: center; margin-top: 10px;">
+            <button id="createQBtn">Step 1: Save Draft (JSON)</button>
+            <button id="seedBtn" class="secondary" style="background: #28a745;">Step 2: Publish All (Seed DB)</button>
+        </div>
+        <pre id="admResponse" style="margin-top: 10px; display: none;"></pre>
     </div>
-
-    <div class="form-group">
-        <label>User Output (Mock Evaluation)</label>
-        <input type="text" id="output" value="0,1">
-        <small>Needs to match expected output for "Correct" status</small>
-    </div>
-
-    <button id="submitBtn">Submit Answer</button>
-
-    <h3>Response:</h3>
-    <div id="response">Waiting...</div>
 
     <script src="client.js"></script>
 </body>

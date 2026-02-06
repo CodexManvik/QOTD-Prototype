@@ -6,9 +6,14 @@ const router = express.Router();
 
 // Question Routes
 router.get('/qotd', QuestionController.getDailyQuestion);
+router.post('/admin/questions', QuestionController.createQuestion);
+router.post('/admin/seed', QuestionController.seedQuestions);
+router.get('/solution/:id', QuestionController.getSolution);
 
 // Submission Routes
+router.post('/run', SubmissionController.runCode);
 router.post('/submissions', SubmissionController.submitAnswer);
+router.get('/stats/me', SubmissionController.getUserStats);
 router.get('/stats/:questionId', SubmissionController.getStats);
 router.get('/leaderboard', SubmissionController.getLeaderboard);
 

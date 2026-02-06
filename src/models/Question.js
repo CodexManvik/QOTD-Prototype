@@ -9,6 +9,7 @@ const questionSchema = new mongoose.Schema({
     sampleInput: { type: String, required: true },
     sampleOutput: { type: String, required: true },
     expectedOutput: { type: String, required: true },
+    solution: { type: String, select: false }, // Hidden by default
     hints: [{ type: String }]
 });
 
