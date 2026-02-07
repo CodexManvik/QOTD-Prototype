@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import { 
-    Trophy, 
-    Crown, 
-    Medal, 
-    TrendingUp, 
-    TrendingDown, 
-    Minus, 
-    Zap, 
-    Target 
+import {
+    Trophy,
+    Crown,
+    Medal,
+    Award,
+    TrendingUp,
+    TrendingDown,
+    Minus,
+    Zap,
+    Target
 } from 'lucide-react';
 import './Leaderboard.css';
 
@@ -31,7 +32,7 @@ export default function Leaderboard() {
 
     const getRankIcon = (rank) => {
         if (rank === 1) return <Crown className="rank-icon gold" />;
-        if (rank === 2) return <Medal className="rank-icon silver" />;
+        if (rank === 2) return <Award className="rank-icon silver" />;
         if (rank === 3) return <Medal className="rank-icon bronze" />;
         return null;
     };
@@ -39,7 +40,7 @@ export default function Leaderboard() {
     return (
         <div className="leaderboard-page">
             <div className="leaderboard-container">
-                
+
                 {/* Header */}
                 <div className="leaderboard-header">
                     <div className="header-text">
@@ -55,7 +56,7 @@ export default function Leaderboard() {
                             { key: 'thismonth', label: 'This Month' },
                             { key: 'thisweek', label: 'This Week' }
                         ].map((tab) => (
-                            <button 
+                            <button
                                 key={tab.key}
                                 className={filter === tab.key ? 'active' : ''}
                                 onClick={() => setFilter(tab.key)}
@@ -97,7 +98,7 @@ export default function Leaderboard() {
                         <span>Streak</span>
                         <span>Trend</span>
                     </div>
-                    
+
                     {leaderboardData.slice(3).map((user) => (
                         <div key={user.rank} className="table-row">
                             <div className="col-rank">#{user.rank}</div>
