@@ -1,10 +1,18 @@
 import { useState } from 'react';
-import { Trophy, Medal, Crown, ChevronUp, ChevronDown } from 'lucide-react';
-import Navbar from '../components/Navbar';
+import { 
+    Trophy, 
+    Crown, 
+    Medal, 
+    TrendingUp, 
+    TrendingDown, 
+    Minus, 
+    Zap, 
+    Target 
+} from 'lucide-react';
 import './Leaderboard.css';
 
 export default function Leaderboard() {
-    const [filter, setFilter] = useState('all');
+    const [filter, setFilter] = useState('alltime');
 
     const leaderboardData = [
         { rank: 1, name: 'Alex Thompson', score: 2850, solved: 156, streak: 45, change: 'up' },
@@ -19,85 +27,110 @@ export default function Leaderboard() {
         { rank: 10, name: 'Maria Garcia', score: 1950, solved: 92, streak: 10, change: 'up' },
     ];
 
+    const getInitials = (name) => name.split(' ').map(n => n[0]).join('');
+
     const getRankIcon = (rank) => {
         if (rank === 1) return <Crown className="rank-icon gold" />;
         if (rank === 2) return <Medal className="rank-icon silver" />;
         if (rank === 3) return <Medal className="rank-icon bronze" />;
-        return <span className="rank-number">{rank}</span>;
-    };
-
-    const getChangeIcon = (change) => {
-        if (change === 'up') return <ChevronUp className="change-icon up" />;
-        if (change === 'down') return <ChevronDown className="change-icon down" />;
-        return <span className="change-icon same">-</span>;
+        return null;
     };
 
     return (
-        <div className="app">
-            
-            <main className="leaderboard-page">
-                <div className="leaderboard-container">
-                    <header className="leaderboard-header">
-                        <div className="header-text">
-                            <h1><Trophy size={32} /> Global Leaderboard</h1>
-                            <p>See how you stack up against the best coders</p>
-                        </div>
-                        <div className="filter-tabs">
-                            <button className={filter === 'all' ? 'active' : ''} onClick={() => setFilter('all')}>All Time</button>
-                            <button className={filter === 'month' ? 'active' : ''} onClick={() => setFilter('month')}>This Month</button>
-                            <button className={filter === 'week' ? 'active' : ''} onClick={() => setFilter('week')}>This Week</button>
-                        </div>
-                    </header>
-
-                    <div className="top-three">
-                        {leaderboardData.slice(0, 3).map((user, index) => (
-                            <div key={user.rank} className={`podium-card rank-${user.rank}`}>
-                                <div className="podium-rank">{getRankIcon(user.rank)}</div>
-                                <div className="podium-avatar">{user.name.split(' ').map(n => n[0]).join('')}</div>
-                                <div className="podium-name">{user.name}</div>
-                                <div className="podium-score">{user.score.toLocaleString()} pts</div>
-                                <div className="podium-stats">
-                                    <span>{user.solved} solved</span>
-                                    <span>🔥 {user.streak} days</span>
-                                </div>
-                            </div>
+        <div className="leaderboard-page">
+            <div className="leaderboard-container">
+                
+                {/* Header */}
+                <div className="leaderboard-header">
+                    <div className="header-text">
+                        <h1>
+                            <Trophy />
+                            Leaderboard
+                        </h1>
+                        <p>Compete with developers worldwide</p>
+                    </div>
+                    <div className="filter-tabs">
+                        {[
+                            { key: 'alltime', label: 'All Time' },
+                            { key: 'thismonth', label: 'This Month' },
+                            { key: 'thisweek', label: 'This Week' }
+                        ].map((tab) => (
+                            <button 
+                                key={tab.key}
+                                className={filter === tab.key ? 'active' : ''}
+                                onClick={() => setFilter(tab.key)}
+                            >
+                                {tab.label}
+                            </button>
                         ))}
                     </div>
-
-                    <div className="leaderboard-table">
-                        <div className="table-header">
-                            <span className="col-rank">Rank</span>
-                            <span className="col-user">User</span>
-                            <span className="col-score">Score</span>
-                            <span className="col-solved">Solved</span>
-                            <span className="col-streak">Streak</span>
-                            <span className="col-change">Change</span>
-                        </div>
-                        <div className="table-body">
-                            {leaderboardData.slice(3).map(user => (
-                                <div key={user.rank} className="table-row">
-                                    <span className="col-rank">{user.rank}</span>
-                                    <span className="col-user">
-                                        <div className="user-avatar">{user.name.split(' ').map(n => n[0]).join('')}</div>
-                                        <span className="user-name">{user.name}</span>
-                                    </span>
-                                    <span className="col-score">{user.score.toLocaleString()}</span>
-                                    <span className="col-solved">{user.solved}</span>
-                                    <span className="col-streak">🔥 {user.streak}</span>
-                                    <span className="col-change">{getChangeIcon(user.change)}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="your-rank-card">
-                        <span className="your-rank-label">Your Position</span>
-                        <span className="your-rank-value">#156</span>
-                        <span className="your-rank-score">1,245 pts</span>
-                        <button className="improve-btn">Keep Practicing →</button>
-                    </div>
                 </div>
-            </main>
+
+                {/* Top 3 Podium */}
+                <div className="top-three">
+                    {leaderboardData.slice(0, 3).map((user) => (
+                        <div key={user.rank} className={`podium-card rank-${user.rank}`}>
+                            <div className="podium-rank">
+                                {getRankIcon(user.rank)}
+                            </div>
+                            <div className="podium-avatar">
+                                {getInitials(user.name)}
+                            </div>
+                            <div className="podium-name">{user.name}</div>
+                            <div className="podium-score">{user.score.toLocaleString()} pts</div>
+                            <div className="podium-stats">
+                                <span><Target size={12} /> {user.solved} solved</span>
+                                <span>•</span>
+                                <span><Zap size={12} /> {user.streak} day streak</span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Leaderboard Table */}
+                <div className="leaderboard-table">
+                    <div className="table-header">
+                        <span>Rank</span>
+                        <span>User</span>
+                        <span>Score</span>
+                        <span>Solved</span>
+                        <span>Streak</span>
+                        <span>Trend</span>
+                    </div>
+                    
+                    {leaderboardData.slice(3).map((user) => (
+                        <div key={user.rank} className="table-row">
+                            <div className="col-rank">#{user.rank}</div>
+                            <div className="col-user">
+                                <div className="user-avatar">{getInitials(user.name)}</div>
+                                <span className="user-name">{user.name}</span>
+                            </div>
+                            <div className="col-score">{user.score.toLocaleString()}</div>
+                            <div className="col-solved">{user.solved}</div>
+                            <div className="col-streak">{user.streak} days</div>
+                            <div className={`change-icon ${user.change}`}>
+                                {user.change === 'up' && <TrendingUp size={18} />}
+                                {user.change === 'down' && <TrendingDown size={18} />}
+                                {user.change === 'same' && <Minus size={18} />}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Your Rank Card */}
+                <div className="your-rank-card">
+                    <div className="your-rank-info">
+                        <div className="your-rank-label">Your Rank</div>
+                        <div className="your-rank-value">#156</div>
+                        <div className="your-rank-score">1,245 points</div>
+                    </div>
+                    <button className="improve-btn">
+                        <Target size={18} />
+                        Keep Practicing
+                    </button>
+                </div>
+
+            </div>
         </div>
     );
 }
