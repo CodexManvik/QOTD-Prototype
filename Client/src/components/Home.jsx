@@ -7,7 +7,7 @@ export default function Home() {
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&family=Sora:wght@400;600;700&display=swap');
 
         .home {
-          --sky: #C9EDFD;
+          --sky: #D8F4FF;
           --sky-deep: #9fdcff;
           --ink: #0b1f2a;
           --muted: #3a4a57;
@@ -16,9 +16,9 @@ export default function Home() {
           color: var(--ink);
           font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
           background:
-            radial-gradient(900px 420px at 12% 0%, rgba(201, 237, 253, 0.8), transparent 60%),
+            radial-gradient(900px 420px at 12% 0%, rgba(216, 244, 255, 0.85), transparent 60%),
             radial-gradient(700px 360px at 90% 10%, rgba(159, 220, 255, 0.7), transparent 55%),
-            linear-gradient(180deg, #f7fbff 0%, #eff7fc 100%);
+            linear-gradient(180deg, #D8F4FF 0%, #eff7fc 100%);
           min-height: 100vh;
         }
 
@@ -92,6 +92,15 @@ export default function Home() {
         .btn:hover {
           transform: translateY(-2px);
           box-shadow: 0 16px 36px rgba(11, 31, 42, 0.16);
+        }
+
+        .btn-primary:hover {
+          background: var(--ink);
+        }
+
+        .btn-primary:focus-visible {
+          outline: 2px solid rgba(11, 31, 42, 0.4);
+          outline-offset: 3px;
         }
 
         .hero-card {
