@@ -64,6 +64,7 @@ export default function PageHeader() {
             splitType="chars"
             from={{ opacity: 0, y: 40 }}
             to={{ opacity: 1, y: 0 }}
+       
             threshold={0.1}
             textAlign="left"
           />
