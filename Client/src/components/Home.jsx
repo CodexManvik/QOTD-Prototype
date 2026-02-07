@@ -1,123 +1,147 @@
-﻿import { Link } from 'react-router-dom';
+﻿import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import lottie from 'lottie-web';
 import './Home.css';
 
+// --- Helper Component for Lottie ---
+const LottiePlayer = ({ filename, style, className }) => {
+  const container = useRef(null);
+
+  useEffect(() => {
+    if (!container.current) return;
+    const anim = lottie.loadAnimation({
+      container: container.current,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: `/${filename}`, 
+    });
+    return () => anim.destroy();
+  }, [filename]);
+
+  return <div ref={container} style={style} className={className} />;
+};
+
 export default function Home() {
+  const [isLeaderboardActive, setIsLeaderboardActive] = useState(false);
+
   return (
-    <main className="home-page">
-      <section className="hero">
-        <div className="hero-text">
-          <span className="eyebrow">Quote of the Day - Focused learning</span>
-          <h1>Start each day with a quote, end it with a win.</h1>
-          <p>
-            QOTD delivers a daily prompt, a short challenge, and a reflection space so learners build skills in minutes,
-            not hours. Simple, consistent, and motivating.
-          </p>
-          <div className="cta-row">
-            <Link to="/qotd" className="btn btn-primary">Start today</Link>
-            <Link to="/leaderboard" className="btn btn-secondary">View Leaderboard</Link>
-          </div>
-          <div className="pill-row">
-            <span className="pill">5-minute daily rituals</span>
-            <span className="pill">Community streaks</span>
-            <span className="pill">Actionable feedback</span>
+    <main className="dashboard-container">
+      <div className="dashboard-grid">
+        
+        {/* AREA 1: Main Hero */}
+        <div className="grid-cell hero-cell">
+          <div className="hero-split">
+            <div className="hero-text">
+              <div className="tag-row">
+                <span className="status-tag">Live v2.0</span>
+                <span className="status-tag-outline">Quote of the Day</span>
+              </div>
+              <h1>Start with a quote,<br/>end with a win.</h1>
+              <p>
+                QOTD delivers a daily prompt, a short challenge, and a reflection space. 
+                Build skills in minutes.
+              </p>
+              <div className="cta-group">
+                <Link to="/qotd" className="btn btn-primary">Start today</Link>
+                <div className="meta-text">
+                  <span className="dot"></span> 9.2k+ learners
+                </div>
+              </div>
+            </div>
+
+            <div className="hero-visual">
+               <LottiePlayer 
+                 filename="growth-analysis.json" 
+                 style={{ width: '100%', maxWidth: '280px', height: 'auto' }} 
+               />
+            </div>
           </div>
         </div>
 
-        <div className="hero-card">
-          <div className="hero-card-content">
-            <p className="quote-title">Today's Quote</p>
-            <p className="quote">"Small steps compound into big change."</p>
-            <p className="quote-author">- QOTD Practice Lab</p>
-            <div className="progress-bar-section">
-              <span className="progress-text">
-                Streak progress
-                <strong>18 / 25</strong>
-              </span>
-              <div className="bar">
-                <div className="bar-fill" style={{ width: '72%' }}></div>
+        {/* AREA 2: The App Preview */}
+        <div className="grid-cell visual-cell">
+          <div className="visual-backdrop"></div>
+          
+          <div className="phone-card">
+            <div className="phone-top">
+              <span className="app-name">QOTD</span>
+              <span className="streak-indicator">18 Day Streak</span>
+            </div>
+            
+            <div className="phone-screen">
+              <div className="screen-header-anim">
+                <LottiePlayer 
+                  filename="market-research.json" 
+                  style={{ width: '20vw', height: '20vw' }} 
+                />
+              </div>
+
+              <div className="quote-clean">
+                <span className="label-tiny">DAILY QUOTE</span>
+                <h4>"Small steps compound into big change."</h4>
+              </div>
+
+              <div className="action-clean">
+                 <div className="input-stub">Write reflection...</div>
               </div>
             </div>
           </div>
         </div>
-      </section>
 
-      <section className="features-section">
-        <h2>Designed to feel light, build deep.</h2>
-        <p>
-          Each day blends a meaningful quote with a micro-challenge and reflection prompt. The flow is built for
-          momentum, so learners stay consistent without burnout.
-        </p>
-        <div className="features-grid">
-          <div className="feature-card">
-            <h3>Daily learning loop</h3>
-            <p>Quote, challenge, reflect, and share in under 10 minutes.</p>
+        {/* AREA 3: Stats */}
+        <div className="grid-cell stat-cell">
+          <div className="stat-item">
+            <span className="stat-val">4.7x</span>
+            <span className="stat-label">Growth</span>
           </div>
-          <div className="feature-card">
-            <h3>Gentle accountability</h3>
-            <p>Streaks, reminders, and check-ins that never feel noisy.</p>
+          <div className="divider"></div>
+          <div className="stat-item">
+            <span className="stat-val">86%</span>
+            <span className="stat-label">Retention</span>
           </div>
-          <div className="feature-card">
-            <h3>Feedback-ready</h3>
-            <p>Capture insights and track growth with daily notes.</p>
-          </div>
-          <div className="feature-card">
-            <h3>Community energy</h3>
-            <p>See how others interpret the same quote to spark ideas.</p>
+          <div className="divider"></div>
+          <div className="stat-item">
+            <span className="stat-val">Daily</span>
+            <span className="stat-label">Loop</span>
           </div>
         </div>
-      </section>
 
-      <section className="flow-section">
-        <h2>Your 3-step daily flow</h2>
-        <p>Make the habit stick with a consistent rhythm that fits in any schedule.</p>
-        <div className="flow-grid">
-          <div className="flow-step">
-            <span className="step-number">1</span>
-            <strong>Read the quote</strong>
-            <span>Short, inspiring, and themed to your goals.</span>
-          </div>
-          <div className="flow-step">
-            <span className="step-number">2</span>
-            <strong>Solve the challenge</strong>
-            <span>One focused action: write, build, or discuss.</span>
-          </div>
-          <div className="flow-step">
-            <span className="step-number">3</span>
-            <strong>Reflect + save</strong>
-            <span>Capture the insight and track the streak.</span>
-          </div>
+        {/* AREA 4: Leaderboard Card */}
+        <div 
+          className={`grid-cell henry-card ${isLeaderboardActive ? 'active' : ''}`}
+          onClick={() => setIsLeaderboardActive(!isLeaderboardActive)}
+        >
+           {/* State A: Inactive (Big JSON Layout) */}
+           <div className={`henry-content inactive-view ${isLeaderboardActive ? 'hidden' : ''}`}>
+              <div className="henry-text-top">
+                  <h3>LEADERBOARD</h3>
+                  <p>View top learners</p>
+              </div>
+              
+              <div className="henry-big-icon">
+                 <LottiePlayer 
+                    filename="blockchain-technology.json"
+                    style={{ width: '18vw', height: 'vw' }} 
+                 />
+              </div>
+           </div>
+
+           {/* State B: Active (The List) */}
+           <div className={`henry-content active-view ${!isLeaderboardActive ? 'hidden' : ''}`}>
+               <div className="henry-header">
+                  
+                   <h3>TOP LEARNERS</h3>
+               </div>
+               <div className="henry-list">
+                   <div className="h-row"><span>01</span> Alex M. <span className="pts">1240</span></div>
+                   <div className="h-row"><span>02</span> Sarah K. <span className="pts">1180</span></div>
+                   <div className="h-row"><span>03</span> Jinhai <span className="pts">1050</span></div>
+               </div>
+           </div>
         </div>
-      </section>
 
-      <section className="stats-section">
-        <h2>Momentum by the numbers</h2>
-        <p>We keep QOTD lightweight so the impact keeps compounding.</p>
-        <div className="stats-grid">
-          <div className="stat-card">
-            <strong>9.2k+</strong>
-            <span>daily check-ins</span>
-          </div>
-          <div className="stat-card">
-            <strong>4.7x</strong>
-            <span>average streak growth</span>
-          </div>
-          <div className="stat-card">
-            <strong>86%</strong>
-            <span>return rate week-over-week</span>
-          </div>
-        </div>
-      </section>
-
-      <section className="home-cta">
-        <h2>Build a daily learning ritual with QOTD.</h2>
-        <p>Start with the next quote and keep the streak alive with your community.</p>
-        <Link to="/qotd" className="btn btn-primary">Join the daily challenge</Link>
-      </section>
-
-      <footer className="home-footer">
-        <span>QOTD Prototype - Crafted for consistent growth</span>
-        <span>Need a custom journey? We can add one.</span>
-      </footer>
+      </div>
     </main>
   );
 }
