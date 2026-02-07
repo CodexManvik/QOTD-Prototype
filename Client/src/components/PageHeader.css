@@ -1,0 +1,188 @@
+/* --- 1. The Curtain Overlay Styles --- */
+.curtain-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #0f172a; /* Deep premium blue-black */
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    
+    /* The Lifting Animation */
+    will-change: transform;
+    transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.curtain-overlay.exiting {
+    transform: translateY(-100%); /* Lifts up like a theatre curtain */
+}
+
+.curtain-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    transition: opacity 0.5s ease;
+}
+
+.curtain-overlay.exiting .curtain-content {
+    opacity: 0;
+}
+
+/* Logo Badge Wrapper */
+.logo-badge {
+    width: 80px; /* Slightly larger for image */
+    height: 80px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 40px rgba(251, 191, 36, 0.1); /* Subtle gold glow */
+    animation: scaleIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    opacity: 0;
+    transform: scale(0.5);
+    overflow: hidden;
+}
+
+/* The White Logo Image */
+.curtain-logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    /* This filter makes any image pure white */
+    filter: brightness(0) invert(1);
+}
+
+/* Brand Text */
+.brand-text {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    letter-spacing: -0.02em;
+}
+
+.text-line {
+    display: block;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.line-1 {
+    background: linear-gradient(to right, #ffffff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textSlideUp 0.8s cubic-bezier(0.2, 0.6, 0.4, 1) 0.3s forwards;
+}
+
+.line-2 {
+    font-size: 2.25rem;
+    font-weight: 500;
+    color: #94a3b8;
+    animation: textSlideUp 0.8s cubic-bezier(0.2, 0.6, 0.4, 1) 0.5s forwards;
+}
+
+/* Loading Bar */
+.loading-bar {
+    width: 160px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 99px;
+    margin-top: 1.5rem;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeIn 0.5s ease 0.8s forwards;
+}
+
+.loading-fill {
+    width: 0%;
+    height: 100%;
+    background: #3b82f6;
+    border-radius: 99px;
+    animation: loadProgress 2s cubic-bezier(0.65, 0, 0.35, 1) 0.8s forwards;
+}
+
+/* Animation Keyframes */
+@keyframes scaleIn { to { opacity: 1; transform: scale(1); } }
+@keyframes textSlideUp { to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { to { opacity: 1; } }
+@keyframes loadProgress { to { width: 100%; } }
+
+
+/* --- 2. Main Header Styles (Layout Fixed) --- */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    
+    /* Layout Constraints */
+    width: 100%;
+    max-width: 1100px; 
+    margin: 0 auto 2.5rem auto; 
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    
+    border-bottom: 1px solid var(--border-subtle, #e2e8f0);
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Typography */
+.page-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--text-primary, #0f172a);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin: 0;
+}
+
+.split-text-title {
+    display: inline-block;
+}
+
+.page-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary, #64748b);
+    margin: 0;
+    font-weight: 400;
+    max-width: 500px;
+}
+
+/* Responsive Fixes */
+@media (max-width: 1150px) {
+    .page-header {
+        max-width: 100%;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+    
+    .brand-text { font-size: 2.5rem; }
+    .line-2 { font-size: 1.75rem; }
+    
+    .page-title {
+        font-size: 1.75rem;
+    }
+}

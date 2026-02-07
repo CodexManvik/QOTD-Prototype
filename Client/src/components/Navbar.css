@@ -1,0 +1,130 @@
+.navbar {
+  background: var(--color-bg-nav);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-theme);
+}
+
+.navbar-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--spacing-base) var(--spacing-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2xl);
+  position: relative;
+}
+
+/* Logo */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  position: absolute;
+  left: var(--spacing-xl);
+  text-decoration: none;
+  transition: transform var(--transition-fast);
+}
+
+.navbar-logo:hover {
+  transform: scale(1.05);
+}
+
+.logo-image {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+  /* Light mode: convert white logo to navy blue (#1E3A5F) */
+  /* Filter calculated for: invert white → then colorize to navy */
+  filter: brightness(0) saturate(100%) invert(18%) sepia(45%) saturate(749%) hue-rotate(176deg) brightness(92%) contrast(89%);
+  transition: filter var(--transition-theme);
+}
+
+/* Dark mode: keep logo white/light */
+:root.dark .logo-image {
+  filter: none;
+}
+
+/* Pill Navigation */
+.pill-nav {
+  display: flex;
+  gap: var(--spacing-xs);
+  background: var(--color-bg-elevated);
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-full);
+  align-items: center;
+  border: 1px solid var(--color-border);
+}
+
+.pill-nav-item {
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.pill-nav-item:hover {
+  color: var(--color-text-primary);
+  background: var(--color-bg-hover);
+}
+
+.pill-nav-item.active {
+  background: var(--color-brand-accent);
+  color: white;
+}
+
+.pill-nav-item.active:hover {
+  background: var(--color-brand-accent-hover);
+}
+
+/* Right Section */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-base);
+  position: absolute;
+  right: var(--spacing-xl);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar-container {
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-base);
+    justify-content: space-between;
+  }
+
+  .navbar-logo {
+    position: static;
+  }
+
+  .nav-right {
+    position: static;
+  }
+
+  .pill-nav {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .logo-image {
+    height: 40px;
+  }
+
+  .pill-nav-item {
+    font-size: var(--font-size-xs);
+    padding: 0.375rem 0.75rem;
+  }
+}

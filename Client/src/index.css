@@ -1,0 +1,491 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* ============================================
+   TechLearn; Design System
+   Light/Dark Mode with Premium Aesthetics
+   ============================================ */
+
+/* Light Mode (Default) */
+:root {
+  /* === Brand Colors === */
+  --color-brand-primary: #1E3A5F;
+  /* Deep Navy - Logo/Headings */
+  --color-brand-accent: #5B8DEF;
+  /* Bright Blue - Accents/Icons */
+  --color-brand-accent-hover: #4A7CD8;
+
+  /* === Backgrounds === */
+  --color-bg-body: linear-gradient(180deg, #D6F3FF 0%, #E8F7FF 50%, #F0FAFF 100%);
+  --color-bg-solid: #E8F7FF;
+  /* Fallback solid color */
+  --color-bg-card: #FFFFFF;
+  --color-bg-nav: rgba(255, 255, 255, 0.85);
+  --color-bg-elevated: #FFFFFF;
+  --color-bg-input: #F8FCFF;
+  --color-bg-hover: rgba(91, 141, 239, 0.08);
+
+  /* === Text === */
+  --color-text-primary: #1E3A5F;
+  /* Deep Navy */
+  --color-text-secondary: #5A7A9A;
+  --color-text-muted: #8BA4BE;
+  --color-text-inverse: #FFFFFF;
+
+  /* === Borders === */
+  --color-border: rgba(30, 58, 95, 0.12);
+  --color-border-hover: rgba(91, 141, 239, 0.3);
+
+  /* === Status Colors === */
+  --color-success: #10B981;
+  --color-success-bg: rgba(16, 185, 129, 0.1);
+  --color-warning: #F59E0B;
+  --color-warning-bg: rgba(245, 158, 11, 0.1);
+  --color-error: #EF4444;
+  --color-error-bg: rgba(239, 68, 68, 0.1);
+
+  /* === Difficulty Badges === */
+  --color-easy: #10B981;
+  --color-easy-bg: rgba(16, 185, 129, 0.15);
+  --color-medium: #F59E0B;
+  --color-medium-bg: rgba(245, 158, 11, 0.15);
+  --color-hard: #EF4444;
+  --color-hard-bg: rgba(239, 68, 68, 0.15);
+
+  /* === Editor === */
+  --color-editor-bg: #1E293B;
+  --color-editor-text: #E2E8F0;
+  --color-editor-line: #334155;
+
+  /* === Shadows === */
+  --shadow-sm: 0 1px 3px rgba(30, 58, 95, 0.08);
+  --shadow-base: 0 4px 12px rgba(30, 58, 95, 0.1);
+  --shadow-md: 0 8px 24px rgba(30, 58, 95, 0.12);
+  --shadow-lg: 0 16px 48px rgba(30, 58, 95, 0.15);
+  --shadow-glow: 0 0 20px rgba(91, 141, 239, 0.25);
+
+  /* === Spacing === */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-base: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+
+  /* === Typography === */
+  --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2rem;
+  --font-size-4xl: 2.5rem;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* === Border Radius === */
+  --radius-sm: 0.375rem;
+  --radius-base: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* === Transitions === */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-theme: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* === Legacy Mappings (for existing components) === */
+  --color-white: var(--color-bg-card);
+  --color-light-gray: #F1F5F9;
+  --color-gray: #CBD5E1;
+  --color-dark-gray: #94A3B8;
+  --color-primary-blue: var(--color-brand-accent);
+  --color-primary-blue-dark: var(--color-brand-accent-hover);
+  --color-primary-blue-light: #7BA3F3;
+  --border-radius-sm: var(--radius-sm);
+  --border-radius-base: var(--radius-base);
+  --border-radius-lg: var(--radius-lg);
+  --border-radius-xl: var(--radius-xl);
+}
+
+/* Dark Mode */
+.dark {
+  /* === Brand Colors === */
+  --color-brand-primary: #FFFFFF;
+  --color-brand-accent: #5B8DEF;
+  --color-brand-accent-hover: #7BA3F3;
+
+  /* === Backgrounds === */
+  --color-bg-body: linear-gradient(180deg, #0A1929 0%, #0D2137 50%, #0A1929 100%);
+  --color-bg-solid: #0A1929;
+  --color-bg-card: #0F2744;
+  --color-bg-nav: rgba(15, 39, 68, 0.9);
+  --color-bg-elevated: #132F4C;
+  --color-bg-input: #0D2137;
+  --color-bg-hover: rgba(91, 141, 239, 0.12);
+
+  /* === Text === */
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #64748B;
+  --color-text-inverse: #0A1929;
+
+  /* === Borders === */
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-hover: rgba(91, 141, 239, 0.4);
+
+  /* === Status Colors === */
+  --color-success: #34D399;
+  --color-success-bg: rgba(52, 211, 153, 0.15);
+  --color-warning: #FBBF24;
+  --color-warning-bg: rgba(251, 191, 36, 0.15);
+  --color-error: #F87171;
+  --color-error-bg: rgba(248, 113, 113, 0.15);
+
+  /* === Difficulty Badges === */
+  --color-easy: #34D399;
+  --color-easy-bg: rgba(52, 211, 153, 0.2);
+  --color-medium: #FBBF24;
+  --color-medium-bg: rgba(251, 191, 36, 0.2);
+  --color-hard: #F87171;
+  --color-hard-bg: rgba(248, 113, 113, 0.2);
+
+  /* === Editor === */
+  --color-editor-bg: #0D2137;
+  --color-editor-text: #E2E8F0;
+  --color-editor-line: #1E3A5F;
+
+  /* === Shadows === */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-base: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 30px rgba(91, 141, 239, 0.3);
+
+  /* === Legacy Mappings === */
+  --color-white: var(--color-bg-card);
+  --color-light-gray: #1E3A5F;
+  --color-gray: #2D4A6A;
+  --color-dark-gray: #3D5A7A;
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+  background: var(--color-bg-body);
+  background-color: var(--color-bg-solid);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background var(--transition-theme), color var(--transition-theme);
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ============================================
+   Links & Buttons
+   ============================================ */
+
+a {
+  color: var(--color-brand-accent);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-brand-accent-hover);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  transition: all var(--transition-fast);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--color-brand-accent);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   Scrollbar Styles
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gray);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-dark-gray);
+}
+
+/* ============================================
+   Theme Toggle Styles
+   ============================================ */
+
+.theme-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-sm);
+}
+
+.theme-toggle:hover {
+  background: var(--color-bg-hover);
+  border-color: var(--color-border-hover);
+  transform: scale(1.05);
+  box-shadow: var(--shadow-glow);
+}
+
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+  color: var(--color-brand-accent);
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+.theme-toggle .sun-icon {
+  position: absolute;
+  opacity: 1;
+  transform: rotate(0deg);
+}
+
+.theme-toggle .moon-icon {
+  position: absolute;
+  opacity: 0;
+  transform: rotate(-90deg);
+}
+
+.dark .theme-toggle .sun-icon {
+  opacity: 0;
+  transform: rotate(90deg);
+}
+
+.dark .theme-toggle .moon-icon {
+  opacity: 1;
+  transform: rotate(0deg);
+}
+
+/* ============================================
+   Card Styles (Premium)
+   ============================================ */
+
+.card {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-base);
+  transition: all var(--transition-base);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-border-hover);
+}
+
+/* ============================================
+   Difficulty Badges
+   ============================================ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-easy {
+  background: var(--color-easy-bg);
+  color: var(--color-easy);
+}
+
+.badge-medium {
+  background: var(--color-medium-bg);
+  color: var(--color-medium);
+}
+
+.badge-hard {
+  background: var(--color-hard-bg);
+  color: var(--color-hard);
+}
+
+/* ============================================
+   Button Styles
+   ============================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  transition: all var(--transition-fast);
+}
+
+.btn-primary {
+  background: var(--color-bg-card);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+  background: var(--color-bg-elevated);
+  border-color: var(--color-border-hover);
+  box-shadow: var(--shadow-base);
+  transform: translateY(-1px);
+}
+
+.btn-accent {
+  background: var(--color-brand-accent);
+  color: white;
+  box-shadow: var(--shadow-base);
+}
+
+.btn-accent:hover {
+  background: var(--color-brand-accent-hover);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   Glassmorphism Effects
+   ============================================ */
+
+.glass {
+  background: var(--color-bg-nav);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border);
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ============================================
+   Tailwind Theme Extensions
+   ============================================ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius-base) - 2px);
+  --radius-md: var(--radius-base);
+  --radius-lg: calc(var(--radius-base) + 4px);
+  --radius-xl: calc(var(--radius-base) + 8px);
+  --color-background: var(--color-bg-solid);
+  --color-foreground: var(--color-text-primary);
+  --color-card: var(--color-bg-card);
+  --color-card-foreground: var(--color-text-primary);
+  --color-primary: var(--color-brand-accent);
+  --color-primary-foreground: white;
+  --color-muted: var(--color-light-gray);
+  --color-muted-foreground: var(--color-text-muted);
+  --color-border: var(--color-border);
+  --color-ring: var(--color-brand-accent);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+}

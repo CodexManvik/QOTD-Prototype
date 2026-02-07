@@ -1,0 +1,64 @@
+.timer-container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  border: 1px solid var(--color-primary-blue);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-radius: var(--border-radius-xl);
+  flex-shrink: 0;
+}
+
+.timer-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: var(--color-primary-blue);
+  color: var(--color-white);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.timer-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.timer-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.timer-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.timer-value {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-primary-blue);
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+  .timer-container {
+    flex-direction: column;
+    gap: var(--spacing-base);
+    padding: var(--spacing-base) var(--spacing-lg);
+  }
+
+  .timer-content {
+    text-align: center;
+  }
+
+  .timer-value {
+    font-size: var(--font-size-base);
+  }
+}

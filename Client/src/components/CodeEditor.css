@@ -1,0 +1,300 @@
+.code-editor {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-base);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: all var(--transition-theme);
+}
+
+.editor-header {
+  background: var(--color-bg-elevated);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--spacing-base) var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-base);
+}
+
+.language-tab {
+  padding: 0.5rem 1rem;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.language-tab:hover {
+  background: var(--color-bg-hover);
+  color: var(--color-text-primary);
+}
+
+.language-tab.active,
+.language-tab:focus {
+  background: var(--color-brand-accent);
+  color: white;
+  border-color: var(--color-brand-accent);
+}
+
+.code-mirror-editor {
+  flex: 1;
+  border: none;
+}
+
+.code-mirror-editor .cm-editor {
+  height: 100% !important;
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family-mono);
+  min-height: 400px;
+  background: var(--color-editor-bg) !important;
+}
+
+.code-mirror-editor .cm-gutters {
+  background: var(--color-editor-bg) !important;
+  border-right: 1px solid var(--color-editor-line);
+}
+
+.code-mirror-editor .cm-content {
+  color: var(--color-editor-text);
+}
+
+.output-section {
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+}
+
+.output-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-elevated);
+}
+
+.tab-button {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.tab-button:hover {
+  color: var(--color-text-primary);
+  background: var(--color-bg-hover);
+}
+
+.tab-button.active {
+  color: var(--color-brand-accent);
+  border-bottom-color: var(--color-brand-accent);
+  background: var(--color-bg-card);
+}
+
+.output-content {
+  padding: var(--spacing-lg);
+  min-height: 180px;
+  background: var(--color-bg-card);
+}
+
+.output-result {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.success-message {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-base);
+  padding: var(--spacing-base) var(--spacing-lg);
+  background: var(--color-success-bg);
+  border: 1px solid var(--color-success);
+  border-radius: var(--radius-lg);
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-base);
+  padding: var(--spacing-base) var(--spacing-lg);
+  background: var(--color-error-bg);
+  border: 1px solid var(--color-error);
+  border-radius: var(--radius-lg);
+  color: var(--color-error);
+  font-weight: 600;
+}
+
+.runtime-info {
+  display: flex;
+  gap: var(--spacing-xl);
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.info-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.info-value {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-brand-accent);
+  font-family: var(--font-family-mono);
+}
+
+.test-cases {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-base);
+}
+
+.test-case-item {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.test-case-header {
+  background: var(--color-bg-elevated);
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.test-status {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.test-status.passed {
+  color: var(--color-success);
+}
+
+.test-status.failed {
+  color: var(--color-error);
+}
+
+.test-case-body {
+  padding: var(--spacing-base);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.test-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.test-code {
+  font-family: var(--font-family-mono);
+  background: var(--color-bg-input);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-base);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  border: 1px solid var(--color-border);
+  overflow-x: auto;
+  display: block;
+}
+
+.action-buttons {
+  display: flex;
+  gap: var(--spacing-base);
+  padding: var(--spacing-lg);
+  border-top: 1px solid var(--color-border);
+  justify-content: flex-end;
+  background: var(--color-bg-elevated);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+}
+
+.btn-primary {
+  background: var(--color-brand-accent);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+  background: var(--color-brand-accent-hover);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-brand-accent);
+  border: 1px solid var(--color-brand-accent);
+}
+
+.btn-secondary:hover {
+  background: var(--color-bg-hover);
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+  .code-mirror-editor .cm-editor {
+    min-height: 250px;
+  }
+
+  .output-content {
+    min-height: 120px;
+  }
+
+  .runtime-info {
+    flex-direction: column;
+    gap: var(--spacing-base);
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
