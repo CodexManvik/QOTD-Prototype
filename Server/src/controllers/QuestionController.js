@@ -20,6 +20,15 @@ class QuestionController {
         }
     }
 
+    async listQuestions(req, res, next) {
+        try {
+            const drafts = await QuestionService.getDraftQuestions();
+            res.status(200).json(drafts);
+        } catch (error) {
+            next(error);
+        }
+    }
+
     async seedQuestions(req, res, next) {
         try {
             const result = await QuestionService.seedQuestions();

@@ -31,6 +31,33 @@ class SubmissionRepository {
             { rank: 5, username: "dev_ops", score: 1100 }
         ];
     }
+
+    async aggregate(pipeline) {
+        // Check if pipeline is for leaderboard (contains $lookup 'users' or matches Leaderboard pipeline structure)
+        const isLeaderboard = pipeline.some(stage => stage.$lookup && stage.$lookup.from === 'users');
+
+        if (isLeaderboard) {
+            // Return data formatted as expected by SubmissionService.getLeaderboard aggregation result
+            // Service expects: { username, totalScore, latestSubmission }
+            return [
+                { username: "algo_master", totalScore: 1500, latestSubmission: new Date() },
+                { username: "code_ninja", totalScore: 1450, latestSubmission: new Date() },
+                { username: "bug_hunter", totalScore: 1300, latestSubmission: new Date() }
+            ];
+        }
+
+        // Default to User Stats mock (Service expects: { totalScore, solvedCount })
+        // Check if it's user stats pipeline (usually matches userId)
+        const isUserStats = pipeline.some(stage => stage.$match && stage.$match.userId);
+        if (isUserStats) {
+            return [{
+                totalScore: 450,
+                solvedCount: 15
+            }];
+        }
+
+        return [];
+    }
 }
 
 export default new SubmissionRepository();
