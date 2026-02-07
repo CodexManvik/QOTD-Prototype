@@ -1,7 +1,5 @@
 .page-header {
-  background-color: var(--color-white);
-  border-bottom: 1px solid var(--color-gray);
-  padding: var(--spacing-xl) var(--spacing-xl);
+  padding: var(--spacing-xl);
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
@@ -39,35 +37,14 @@
   line-height: var(--line-height-normal);
 }
 
-@media (max-width: 768px) {
-  .page-header {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: var(--spacing-lg) var(--spacing-base);
-  }
-
-  .page-title {
-    font-size: var(--font-size-2xl);
-  }
-
-  .timer-badge {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .timer-text {
-    font-size: var(--font-size-xs);
-  }
-}
-
-/* Fullscreen intro overlay that shows only the SplitText title */
+/* Intro Overlay */
 .intro-overlay {
   position: fixed;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #000;
+  background: var(--color-bg-solid);
   z-index: 2000;
   transition: opacity 0.6s ease, visibility 0.6s ease;
   opacity: 1;
@@ -81,7 +58,7 @@
 }
 
 .intro-split {
-  color: var(--color-text-primary);
+  color: var(--color-brand-primary);
   font-size: 3.5rem;
   font-weight: 800;
   text-align: center;
@@ -94,6 +71,22 @@
 }
 
 @media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--spacing-lg) var(--spacing-base);
+  }
+
+  .page-title,
+  .split-text-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .timer-badge {
+    width: 100%;
+    justify-content: center;
+  }
+
   .intro-split {
     font-size: 2rem;
   }

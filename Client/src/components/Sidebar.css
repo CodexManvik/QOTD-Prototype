@@ -6,25 +6,36 @@
 
 .progress-card,
 .leaderboard-card {
-  background-color: var(--color-white);
-  border-radius: var(--border-radius-lg);
+  background: var(--color-bg-card);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
   box-shadow: var(--shadow-base);
   padding: var(--spacing-xl);
+  transition: all var(--transition-theme);
 }
 
 .card-title {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-base);
   font-weight: 700;
   color: var(--color-text-primary);
+  margin: 0 0 0.25rem 0;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.card-subtitle {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
   margin: 0 0 var(--spacing-lg) 0;
-  padding-bottom: var(--spacing-lg);
-  border-bottom: 1px solid var(--color-gray);
+  padding-bottom: var(--spacing-base);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .progress-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-base);
 }
 
 .progress-item {
@@ -33,17 +44,25 @@
   align-items: center;
   justify-content: center;
   padding: var(--spacing-lg);
-  background-color: var(--color-light-gray);
-  border-radius: var(--border-radius-base);
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-lg);
   text-align: center;
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-fast);
+}
+
+.progress-item:hover {
+  border-color: var(--color-border-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-base);
 }
 
 .progress-value {
   font-size: var(--font-size-2xl);
   font-weight: 700;
-  color: var(--color-primary-blue);
+  color: var(--color-brand-accent);
   line-height: 1;
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
 }
 
 .progress-value.streak {
@@ -53,147 +72,114 @@
 
 .progress-label {
   font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
+  color: var(--color-text-muted);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  line-height: var(--line-height-tight);
+  letter-spacing: 0.05em;
 }
 
 .leaderboard-list {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-base);
+  gap: var(--spacing-sm);
 }
 
 .leaderboard-item {
   display: flex;
   align-items: center;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-base);
   padding: var(--spacing-base);
-  background-color: var(--color-light-gray);
-  border-radius: var(--border-radius-base);
-  transition: background-color var(--transition-fast);
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-fast);
+  cursor: pointer;
 }
 
 .leaderboard-item:hover {
-  background-color: #f0f2f5;
-}
-
-.leaderboard-item:hover .solver-name {
-  color: #000000;
+  border-color: var(--color-border-hover);
+  transform: translateX(4px);
+  box-shadow: var(--shadow-base);
 }
 
 .rank-badge {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  background-color: var(--color-primary-blue);
-  color: var(--color-white);
+  width: 28px;
+  height: 28px;
+  background: var(--color-brand-accent);
+  color: white;
   border-radius: 50%;
   font-weight: 700;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   flex-shrink: 0;
 }
 
-.rank-badge:nth-child(1) {
-  background-color: #fbbf24;
-  color: #1f2937;
-}
-
-.leaderboard-item:first-child .rank-badge {
-  background-color: #fbbf24;
-  color: #1f2937;
+/* Gold, Silver, Bronze for top 3 */
+.leaderboard-item:nth-child(1) .rank-badge {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #1a1a1a;
 }
 
 .leaderboard-item:nth-child(2) .rank-badge {
-  background-color: #c0c0c0;
-  color: #1f2937;
+  background: linear-gradient(135deg, #E8E8E8 0%, #A0A0A0 100%);
+  color: #1a1a1a;
 }
 
 .leaderboard-item:nth-child(3) .rank-badge {
-  background-color: #cd7f32;
-  color: #ffffff;
+  background: linear-gradient(135deg, #CD7F32 0%, #A0522D 100%);
+  color: white;
 }
 
 .solver-info {
   display: flex;
   align-items: center;
-  gap: var(--spacing-base);
+  gap: var(--spacing-sm);
   flex: 1;
+  min-width: 0;
 }
 
 .solver-avatar {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  background-color: var(--color-primary-blue);
-  color: var(--color-white);
+  width: 32px;
+  height: 32px;
+  background: var(--color-bg-hover);
+  color: var(--color-brand-accent);
   border-radius: 50%;
   font-weight: 600;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   flex-shrink: 0;
-}
-
-.solver-details {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
+  border: 1px solid var(--color-border);
 }
 
 .solver-name {
   font-size: var(--font-size-sm);
   font-weight: 600;
-  color: var(--color-text-black);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.solver-name :hover {
-  text-decoration: underline;
-  cursor: pointer;
-  color: #000000;
-}
+
 .solver-score {
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-sm);
   font-weight: 700;
-  color: var(--color-primary-blue);
-  min-width: 50px;
+  color: var(--color-brand-accent);
+  min-width: 40px;
   text-align: right;
 }
 
 @media (max-width: 1024px) {
   .sidebar {
     flex-direction: row;
-    gap: var(--spacing-lg);
   }
 
   .progress-card,
   .leaderboard-card {
     flex: 1;
-    padding: var(--spacing-lg);
-  }
-
-  .card-title {
-    font-size: var(--font-size-base);
-    margin-bottom: var(--spacing-lg);
-  }
-
-  .progress-grid {
-    gap: var(--spacing-base);
-  }
-
-  .progress-item {
-    padding: var(--spacing-base);
-  }
-
-  .progress-value {
-    font-size: var(--font-size-xl);
-  }
-
-  .progress-label {
-    font-size: var(--font-size-xs);
   }
 }
 
@@ -205,25 +191,5 @@
   .progress-card,
   .leaderboard-card {
     padding: var(--spacing-lg);
-  }
-
-  .progress-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .leaderboard-list {
-    gap: var(--spacing-sm);
-  }
-
-  .leaderboard-item {
-    padding: var(--spacing-sm) var(--spacing-base);
-  }
-
-  .solver-name {
-    font-size: var(--font-size-xs);
-  }
-
-  .solver-score {
-    font-size: var(--font-size-sm);
   }
 }

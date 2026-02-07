@@ -9,7 +9,7 @@ import './CodeEditor.css';
 export default function CodeEditor() {
   const [activeTab, setActiveTab] = useState('output');
   const [language, setLanguage] = useState('javascript');
-  
+
   const languageTemplates = {
     javascript: `function solve(nums, target) {
   // Write your solution here
@@ -75,7 +75,7 @@ vector<int> twoSum(vector<int>& nums, int target) {
   const [code, setCode] = useState(languageTemplates[language]);
 
   const getExtension = (lang) => {
-    switch(lang) {
+    switch (lang) {
       case 'javascript':
         return javascript();
       case 'java':
