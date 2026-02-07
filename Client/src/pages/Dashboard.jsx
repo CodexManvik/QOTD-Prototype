@@ -33,7 +33,7 @@ export default function Dashboard() {
 
     return (
         <div className="app">
-            <Navbar />
+            
             <main className="dashboard-page">
                 <div className="dashboard-container">
                     <header className="dashboard-header">

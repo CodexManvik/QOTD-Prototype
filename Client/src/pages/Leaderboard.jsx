@@ -34,7 +34,7 @@ export default function Leaderboard() {
 
     return (
         <div className="app">
-            <Navbar />
+            
             <main className="leaderboard-page">
                 <div className="leaderboard-container">
                     <header className="leaderboard-header">
