@@ -1,0 +1,324 @@
+.dashboard-page {
+    flex: 1;
+    padding: var(--spacing-xl);
+}
+
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dashboard-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.dashboard-header h1 {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.dashboard-header p {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-base);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.stat-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    transition: all var(--transition-fast);
+}
+
+.stat-card:hover {
+    border-color: var(--color-border-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.stat-card.highlight {
+    background: linear-gradient(135deg, var(--color-brand-accent), var(--color-brand-accent-hover));
+    border: none;
+}
+
+.stat-card.highlight .stat-icon,
+.stat-card.highlight .stat-value,
+.stat-card.highlight .stat-label {
+    color: white;
+}
+
+.stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: var(--color-bg-hover);
+    border-radius: var(--radius-lg);
+    color: var(--color-brand-accent);
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-top: 0.25rem;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.progress-section,
+.achievements-section,
+.activity-section {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+}
+
+.progress-section h2,
+.achievements-section h2,
+.activity-section h2 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-base);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.difficulty-bars {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-base);
+}
+
+.difficulty-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-base);
+}
+
+.diff-label {
+    width: 70px;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+}
+
+.diff-label.easy {
+    color: var(--color-easy);
+}
+
+.diff-label.medium {
+    color: var(--color-medium);
+}
+
+.diff-label.hard {
+    color: var(--color-hard);
+}
+
+.diff-bar-container {
+    flex: 1;
+    height: 8px;
+    background: var(--color-bg-elevated);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.diff-bar {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width 0.5s ease;
+}
+
+.diff-bar.easy {
+    background: var(--color-easy);
+}
+
+.diff-bar.medium {
+    background: var(--color-medium);
+}
+
+.diff-bar.hard {
+    background: var(--color-hard);
+}
+
+.diff-count {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    width: 50px;
+    text-align: right;
+}
+
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--spacing-sm);
+}
+
+.achievement {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--spacing-base);
+    background: var(--color-bg-elevated);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-fast);
+}
+
+.achievement.locked {
+    opacity: 0.4;
+    filter: grayscale(1);
+}
+
+.achievement.unlocked:hover {
+    transform: scale(1.05);
+    background: var(--color-bg-hover);
+}
+
+.achievement-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.achievement-name {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    text-align: center;
+}
+
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.activity-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-base) var(--spacing-lg);
+    background: var(--color-bg-elevated);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-fast);
+}
+
+.activity-item:hover {
+    background: var(--color-bg-hover);
+}
+
+.activity-problem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-base);
+}
+
+.problem-name {
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+.difficulty-tag {
+    font-size: var(--font-size-xs);
+    padding: 0.125rem 0.5rem;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+}
+
+.difficulty-tag.easy {
+    background: var(--color-easy-bg);
+    color: var(--color-easy);
+}
+
+.difficulty-tag.medium {
+    background: var(--color-medium-bg);
+    color: var(--color-medium);
+}
+
+.difficulty-tag.hard {
+    background: var(--color-hard-bg);
+    color: var(--color-hard);
+}
+
+.activity-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.activity-meta .status {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}
+
+.activity-meta .status.solved {
+    color: var(--color-success);
+}
+
+.activity-meta .status.attempted {
+    color: var(--color-warning);
+}
+
+.activity-meta .time,
+.activity-meta .date {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+@media (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .achievements-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .achievements-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .activity-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+}

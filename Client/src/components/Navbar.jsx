@@ -1,13 +1,15 @@
+import { Link, NavLink } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 import './Navbar.css';
-import { Link, NavLink } from 'react-router-dom';
 
 export default function Navbar() {
   const navItems = [
-    { label: 'Home', href: '/' },
-    { label: 'QOTD', href: '/qotd' },
-    { label: 'Practice', href: '/practice' },
-    { label: 'Interview Prep', href: '/interview' },
+    { label: 'Home', path: '/' },
+    { label: 'QOTD', path: '/qotd' },
+    { label: 'Practice', path: '/practice' },
+    { label: 'Interview Prep', path: '/interview' },
+    { label: 'Leaderboard', path: '/leaderboard' },
+    { label: 'Dashboard', path: '/dashboard' },
   ];
 
   return (
@@ -21,7 +23,7 @@ export default function Navbar() {
           {navItems.map((item) => (
             <NavLink
               key={item.label}
-              to={item.href}
+              to={item.path}
               className={({ isActive }) => `pill-nav-item ${isActive ? 'active' : ''}`}
             >
               {item.label}

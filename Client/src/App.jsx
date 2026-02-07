@@ -6,7 +6,9 @@ import CodeEditor from './components/CodeEditor';
 import Sidebar from './components/Sidebar';
 import DailyCTA from './components/DailyCTA';
 import ClickSpark from './components/ClickSpark';
-import Home from './components/home';
+import Home from './components/Home';
+import Dashboard from './pages/Dashboard';
+import Leaderboard from './pages/Leaderboard';
 import './App.css';
 
 export default function App() {
@@ -38,6 +40,8 @@ export default function App() {
               </>
             }
           />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
         </Routes>
       </div>
     </ClickSpark>

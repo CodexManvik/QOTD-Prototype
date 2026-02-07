@@ -1,0 +1,313 @@
+.leaderboard-page {
+    flex: 1;
+    padding: var(--spacing-xl);
+}
+
+.leaderboard-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.leaderboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-2xl);
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+}
+
+.header-text h1 {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
+}
+
+.header-text h1 svg {
+    color: var(--color-brand-accent);
+}
+
+.header-text p {
+    color: var(--color-text-secondary);
+}
+
+.filter-tabs {
+    display: flex;
+    gap: var(--spacing-xs);
+    background: var(--color-bg-card);
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border);
+}
+
+.filter-tabs button {
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    background: transparent;
+    transition: all var(--transition-fast);
+}
+
+.filter-tabs button:hover {
+    color: var(--color-text-primary);
+}
+
+.filter-tabs button.active {
+    background: var(--color-brand-accent);
+    color: white;
+}
+
+.top-three {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.podium-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    text-align: center;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.podium-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.podium-card.rank-1 {
+    order: 2;
+    background: linear-gradient(180deg, rgba(255, 215, 0, 0.1), var(--color-bg-card));
+    border-color: rgba(255, 215, 0, 0.3);
+}
+
+.podium-card.rank-2 {
+    order: 1;
+}
+
+.podium-card.rank-3 {
+    order: 3;
+}
+
+.podium-rank {
+    margin-bottom: var(--spacing-base);
+}
+
+.rank-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.rank-icon.gold {
+    color: #FFD700;
+}
+
+.rank-icon.silver {
+    color: #C0C0C0;
+}
+
+.rank-icon.bronze {
+    color: #CD7F32;
+}
+
+.podium-avatar {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto var(--spacing-base);
+    background: var(--color-brand-accent);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: var(--font-size-xl);
+}
+
+.podium-name {
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.podium-score {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--color-brand-accent);
+    margin-bottom: var(--spacing-sm);
+}
+
+.podium-stats {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-base);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.leaderboard-table {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    margin-bottom: var(--spacing-xl);
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 60px 1fr 100px 80px 80px 60px;
+    padding: var(--spacing-base) var(--spacing-lg);
+    background: var(--color-bg-elevated);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 100px 80px 80px 60px;
+    padding: var(--spacing-base) var(--spacing-lg);
+    align-items: center;
+    border-top: 1px solid var(--color-border);
+    transition: background var(--transition-fast);
+}
+
+.table-row:hover {
+    background: var(--color-bg-hover);
+}
+
+.col-rank {
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.col-user {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    background: var(--color-bg-hover);
+    color: var(--color-brand-accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: var(--font-size-xs);
+}
+
+.user-name {
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+.col-score {
+    font-weight: 600;
+    color: var(--color-brand-accent);
+}
+
+.col-solved,
+.col-streak {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+}
+
+.change-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.change-icon.up {
+    color: var(--color-success);
+}
+
+.change-icon.down {
+    color: var(--color-error);
+}
+
+.change-icon.same {
+    color: var(--color-text-muted);
+}
+
+.your-rank-card {
+    background: linear-gradient(135deg, var(--color-brand-accent), var(--color-brand-accent-hover));
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+}
+
+.your-rank-label {
+    font-size: var(--font-size-sm);
+    opacity: 0.9;
+}
+
+.your-rank-value {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+}
+
+.your-rank-score {
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+}
+
+.improve-btn {
+    background: white;
+    color: var(--color-brand-accent);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    transition: all var(--transition-fast);
+}
+
+.improve-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 768px) {
+    .top-three {
+        grid-template-columns: 1fr;
+    }
+
+    .podium-card.rank-1,
+    .podium-card.rank-2,
+    .podium-card.rank-3 {
+        order: unset;
+    }
+
+    .table-header,
+    .table-row {
+        grid-template-columns: 40px 1fr 80px 60px;
+    }
+
+    .col-streak,
+    .col-change {
+        display: none;
+    }
+
+    .your-rank-card {
+        flex-wrap: wrap;
+        gap: var(--spacing-base);
+    }
+}
