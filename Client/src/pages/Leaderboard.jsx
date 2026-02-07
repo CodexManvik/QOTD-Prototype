@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Trophy, Medal, Crown, ChevronUp, ChevronDown } from 'lucide-react';
-import Navbar from '../components/Navbar';
 import './Leaderboard.css';
 
 export default function Leaderboard() {
@@ -33,8 +32,6 @@ export default function Leaderboard() {
     };
 
     return (
-        <div className="app">
-            <Navbar />
             <main className="leaderboard-page">
                 <div className="leaderboard-container">
                     <header className="leaderboard-header">
@@ -98,6 +95,5 @@ export default function Leaderboard() {
                     </div>
                 </div>
             </main>
-        </div>
     );
 }

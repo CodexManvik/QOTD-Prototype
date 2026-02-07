@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Trophy, TrendingUp, Clock, Target, Award, Flame } from 'lucide-react';
-import Navbar from '../components/Navbar';
 import './Dashboard.css';
 
 export default function Dashboard() {
@@ -32,8 +31,6 @@ export default function Dashboard() {
     ];
 
     return (
-        <div className="app">
-            <Navbar />
             <main className="dashboard-page">
                 <div className="dashboard-container">
                     <header className="dashboard-header">
@@ -133,6 +130,5 @@ export default function Dashboard() {
                     </section>
                 </div>
             </main>
-        </div>
     );
 }
