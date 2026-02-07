@@ -19,7 +19,7 @@ import { mockAuth } from './middlewares/mockAuth.middleware.js';
 app.use(mockAuth);
 
 // Static Files
-app.use(express.static('public'));
+app.use(express.static('frontend'));
 
 app.use('/api/v1', apiRoutes);
 

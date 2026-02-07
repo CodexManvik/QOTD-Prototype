@@ -10,7 +10,9 @@
   "scripts": {
     "start": "node src/main.js",
     "dev": "node --watch src/main.js",
-    "seed": "node scripts/seed-db.js && node scripts/seed-leaderboard.js"
+    "dev:full": "concurrently \"npm run dev\" \"cd Client && npm run dev\"",
+    "seed": "node scripts/seed-db.js && node scripts/seed-leaderboard.js",
+    "verify": "node scripts/verify_all_routes.js"
   },
   "keywords": [
     "nodejs",
@@ -28,5 +30,8 @@
     "mongoose": "^9.1.5",
     "morgan": "^1.10.0",
     "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
   }
 }

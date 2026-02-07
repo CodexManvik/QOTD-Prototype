@@ -10,6 +10,19 @@ class QuestionController {
         }
     }
 
+    async getQuestionById(req, res, next) {
+        try {
+            const { id } = req.params;
+            const question = await QuestionService.getQuestionById(id);
+            if (!question) {
+                return res.status(404).json({ message: 'Question not found' });
+            }
+            res.status(200).json(question);
+        } catch (error) {
+            next(error);
+        }
+    }
+
     async createQuestion(req, res, next) {
         try {
             // Note: Service now returns an object with message, not a DB doc

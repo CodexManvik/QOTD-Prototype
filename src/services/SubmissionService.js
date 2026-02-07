@@ -1,4 +1,4 @@
-import Submission from '../models/Submission.js';
+import SubmissionRepository from '../repositories/SubmissionRepository.js';
 import Question from '../models/Question.js';
 import User from '../models/User.js';
 
@@ -17,37 +17,57 @@ class SubmissionService {
             throw new Error('Question not found');
         }
 
-        // 2. Mock Execution Logic
-        // In a real system, we'd send `code` + `input` to a sandbox (e.g. Piston/Judge0).
-        // Here, we simulate simple PASS/FAIL based on a comment or rudimentary logic.
+        // 2. Mock Execution Logic with Test Cases
+        // If question has no testCases (legacy), fallback to old behavior
+        const testCases = question.testCases && question.testCases.length > 0
+            ? question.testCases
+            : [{ input: question.sampleInput || '', expected: question.expectedOutput || '', hidden: false, id: 1 }];
 
-        let status = 'incorrect';
-        let output = '';
-        let score = 0;
+        const testResults = [];
+        let totalScore = 0;
+        let allPassed = true;
 
-        // MOCK LOGIC: 
-        // If code contains the string "return <expectedOutput>", we consider it correct.
-        // Or if it's a dry run, we just return the sample output.
-
-        const expected = question.expectedOutput || '';
-
-        // Simulating processing delay
+        // Simulate processing delay
         await new Promise(resolve => setTimeout(resolve, 500));
 
-        if (code.includes(expected) || code.includes('correct')) {
-            status = 'correct';
-            output = expected;
-            score = 10; // 10 points for correct
-        } else {
-            status = 'incorrect';
-            output = `Error: Output did not match expected value.\nExpected: ${expected}\nReceived: <Random/bad output>`;
+        for (const [index, testCase] of testCases.entries()) {
+            const caseId = index + 1;
+            let status = 'failed';
+            let output = '';
+
+            // MOCK LOGIC: 
+            // If code contains the expected string OR "return <expected>"
+            if (code.includes(testCase.expected) || code.includes('correct')) {
+                status = 'passed';
+                output = testCase.expected;
+            } else {
+                status = 'failed';
+                allPassed = false;
+                output = `Error: Output mismatch.\nExpected: ${testCase.expected}\nReceived: <Random/bad output>`;
+            }
+
+            testResults.push({
+                id: caseId,
+                status,
+                input: testCase.hidden ? 'Hidden' : testCase.input,
+                expected: testCase.hidden ? 'Hidden' : testCase.expected,
+                got: output,
+                hidden: testCase.hidden
+            });
         }
 
+        // Calculate final status and score
+        const overallStatus = allPassed ? 'correct' : 'incorrect';
+        const score = allPassed ? 10 : 0; // Simple scoring: All or Nothing
+        const message = allPassed ? 'All Test Cases Passed!' : 'Some Test Cases Failed';
+
         const result = {
-            status,
-            output,
+            status: overallStatus,
+            message,
+            score,
             executionTime: '20ms',
-            memoryUsage: '12MB'
+            memoryUsage: '12MB',
+            testResults // Return detailed results for frontend
         };
 
         if (isDryRun) {
@@ -55,16 +75,13 @@ class SubmissionService {
         }
 
         // 3. Save Submission (if not dry run)
-        // Check if user has already submitted successfully today?
-        // Rules: "Maximum 1 submission" is strictly enforced in UserService limits (checkLimit).
-        // So here we just save it.
-
-        const submission = await Submission.create({
+        // Use Repository instead of direct Model
+        const submission = await SubmissionRepository.create({
             userId,
             questionId,
             code,
             language,
-            status,
+            status: overallStatus,
             score,
             timestamp: new Date()
         });
@@ -77,8 +94,9 @@ class SubmissionService {
     }
 
     async getStats(questionId) {
-        const total = await Submission.countDocuments({ questionId });
-        const correct = await Submission.countDocuments({ questionId, status: 'correct' });
+        // Use Repository
+        const total = await SubmissionRepository.count({ questionId });
+        const correct = await SubmissionRepository.count({ questionId, status: 'correct' });
 
         return {
             questionId,
@@ -92,7 +110,10 @@ class SubmissionService {
         // Mock Streak Logic (or simple daily continuity check)
         // For now, we'll aggregate total score and solved count.
 
-        const stats = await Submission.aggregate([
+        // REFACTOR: Move pipeline to Repository or use Repository.aggregate
+        // But for now, we can pass pipeline to repo.aggregate()
+
+        const pipeline = [
             { $match: { userId, status: 'correct' } },
             {
                 $group: {
@@ -101,8 +122,9 @@ class SubmissionService {
                     solvedCount: { $sum: 1 }
                 }
             }
-        ]);
+        ];
 
+        const stats = await SubmissionRepository.aggregate(pipeline);
         const user = await User.findOne({ userId });
         const data = stats[0] || { totalScore: 0, solvedCount: 0 };
 
@@ -111,7 +133,7 @@ class SubmissionService {
             role: user ? user.role : 'free',
             totalScore: data.totalScore,
             problemsSolved: data.solvedCount,
-            currentStreak: user ? (user.dailyActivity.submissions > 0 ? 1 : 0) : 0, // Simple mock streak
+            currentStreak: user ? (user.dailyActivity?.submissions > 0 ? 1 : 0) : 0, // Simple mock streak
             maxStreak: 5 // Mock value for "Paid" feature demo
         };
     }
@@ -120,9 +142,6 @@ class SubmissionService {
         // Simple In-Memory Cache Key
         const cacheKey = `leaderboard_${difficulty || 'all'}`;
 
-        // Helper: Generic in-memory cache (attached to class instance or module scope)
-        // For simplicity, attaching to 'this' if checked, else defining here won't work across requests easily if re-imported?
-        // Node modules are cached, so module-level var is fine.
         if (!this.cache) this.cache = new Map();
 
         const cached = this.cache.get(cacheKey);
@@ -130,22 +149,13 @@ class SubmissionService {
             return cached.data;
         }
 
-        // Daily Leaderboard: based on today's submissions
         const startOfDay = new Date();
         startOfDay.setHours(0, 0, 0, 0);
 
         const endOfDay = new Date();
         endOfDay.setHours(23, 59, 59, 999);
 
-        // We need to join with User to get role (to filter out Free users if needed)
-        // or ensure `getLeaderboard` is only accessible to Paid?
-        // Requirement: "Access Rules... Free users: Can see score, Cannot appear on leaderboard"
-
-        // So we must filter out users who are 'free' from the RESULTS, 
-        // OR we just don't show Free users in the list.
-        // Note: The User model has the role. Submission doesn't have role snapshot.
-        // We need to $lookup.
-
+        // REFACTOR: Same pipeline logic, but via Repository.aggregate
         const pipeline = [
             {
                 $match: {
@@ -153,9 +163,6 @@ class SubmissionService {
                     status: 'correct'
                 }
             },
-            // Filter by question difficulty via lookup?
-            // "Separate leaderboard for each difficulty".
-            // Since `Submission` links to `Question`, we need to inspect the Question's difficulty.
             {
                 $lookup: {
                     from: 'questions',
@@ -167,15 +174,14 @@ class SubmissionService {
             { $unwind: '$question' },
             {
                 $match: {
-                    'question.difficulty': { $regex: new RegExp(`^${difficulty}$`, 'i') } // Case insensitive match
+                    'question.difficulty': { $regex: new RegExp(`^${difficulty}$`, 'i') }
                 }
             },
-            // Lookup User to filter out Free users
             {
                 $lookup: {
                     from: 'users',
-                    localField: 'userId', // Submission.userId (string)
-                    foreignField: 'userId', // User.userId (string)
+                    localField: 'userId',
+                    foreignField: 'userId',
                     as: 'user'
                 }
             },
@@ -185,31 +191,32 @@ class SubmissionService {
                     'user.role': { $ne: 'free' } // Free users CANNOT appear on leaderboard
                 }
             },
-            // Group by User to sum scores? OR just list submissions?
-            // "Leaderboard data... One entry per user?" Usually yes.
-            // If user solved multiple questions of same difficulty today (if possible), sum score.
-            // But requirement says "One question... global for the day". 
-            // So there is only ONE question per day. 
-            // So grouping isn't strictly necessary if only one Q per day.
-            // But let's act robustly.
             {
                 $group: {
                     _id: '$userId',
-                    totalScore: { $sum: '$score' }, // Summing if we have >1 Q
+                    totalScore: { $sum: '$score' },
                     latestSubmission: { $max: '$timestamp' },
-                    username: { $first: '$userId' } // In a real app we'd have a username field
+                    username: { $first: '$userId' }
                 }
             },
             { $sort: { totalScore: -1, latestSubmission: 1 } },
             { $limit: 10 }
         ];
 
-        const result = await Submission.aggregate(pipeline);
+        const result = await SubmissionRepository.aggregate(pipeline);
 
-        // Cache result
-        this.cache.set(cacheKey, { timestamp: Date.now(), data: result });
+        // Map result to simpler format
+        const formatted = result.map((s, i) => ({
+            rank: i + 1,
+            username: s.username,
+            score: s.totalScore, // from group
+            time: new Date(s.latestSubmission).toLocaleTimeString(),
+            difficulty: difficulty || 'Mixed'
+        }));
 
-        return result;
+        this.cache.set(cacheKey, { timestamp: Date.now(), data: formatted });
+
+        return formatted;
     }
 }
 
@@ -217,6 +224,5 @@ class SubmissionService {
 const leaderboardCache = new Map();
 const CACHE_TTL_MS = 60 * 1000; // 1 minute
 
-export default new SubmissionService(); // Export instance but we modify class definition below
-// Actually, easier to keep class structure clean. I will modify the method inside.
+export default new SubmissionService();
 

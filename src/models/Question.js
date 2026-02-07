@@ -10,7 +10,12 @@ const questionSchema = new mongoose.Schema({
     sampleOutput: { type: String, required: true },
     expectedOutput: { type: String, required: true },
     solution: { type: String, select: false }, // Hidden by default
-    hints: [{ type: String }]
+    hints: [{ type: String }],
+    testCases: [{
+        input: { type: String, required: true },
+        expected: { type: String, required: true },
+        hidden: { type: Boolean, default: false }
+    }]
 });
 
 export default mongoose.model('Question', questionSchema);

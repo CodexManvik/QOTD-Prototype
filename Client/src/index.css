@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-50: #c2ebfe;
+  --color-brand-100: #b2ebf2;
+  --color-brand-200: #80deea;
+  --color-brand-300: #4dd0e1;
+  --color-brand-400: #26c6da;
+  --color-brand-500: #00bcd4;
+  --color-brand-600: #00acc1;
+  --color-brand-700: #0097a7;
+  --color-brand-800: #00838f;
+  --color-brand-900: #006064;
+  --color-brand-950: #00363a;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  /* Legacy Compatibility Variables (Re-mapped to Light Theme) */
+  --color-primary-blue: #001862;
+  --color-primary-blue-dark: #000f3e;
+  --color-primary-blue-light: #c2ebfe;
+
+  --color-white: #ffffff;
+  --color-light-gray: #c2ebfe;
+  --color-gray: #e0faff;
+  --color-dark-gray: #005f73;
+
+  --color-text-primary: #001862;
+  --color-text-secondary: #005f73;
+
+  --color-success: #48bb78;
+  --color-success-light: #f0fff4;
+  --color-warning: #f6ad55;
+  --color-easy: #48bb78;
+  --color-medium: #f6ad55;
+  --color-hard: #ef4444;
+
+  --color-editor-bg: #1e1e1e;
+  --color-editor-text: #e2e8f0;
+
+  --radius: 0.625rem;
+}
+
+:root {
+  --background: #c2ebfe;
+  --foreground: #001862;
+  --card: #ffffff;
+  --card-foreground: #001862;
+  --popover: #ffffff;
+  --popover-foreground: #001862;
+  --primary: #001862;
+  --primary-foreground: #ffffff;
+  --secondary: #e0faff;
+  --secondary-foreground: #001862;
+  --muted: #c2ebfe;
+  --muted-foreground: #005f73;
+  --accent: #00bcd4;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #e0faff;
+  --input: #e0faff;
+  --ring: #001862;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}

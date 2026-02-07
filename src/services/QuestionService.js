@@ -14,6 +14,10 @@ class QuestionService {
         return question;
     }
 
+    async getQuestionById(id) {
+        return await Question.findOne({ id });
+    }
+
     async createQuestion(data) {
         // 1. Read existing JSON
         let questions = [];

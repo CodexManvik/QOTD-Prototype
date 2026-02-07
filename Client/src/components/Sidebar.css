@@ -1,0 +1,229 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.progress-card,
+.leaderboard-card {
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-base);
+  padding: var(--spacing-xl);
+}
+
+.card-title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-lg) 0;
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--color-gray);
+}
+
+.progress-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+}
+
+.progress-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  background-color: var(--color-light-gray);
+  border-radius: var(--border-radius-base);
+  text-align: center;
+}
+
+.progress-value {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-primary-blue);
+  line-height: 1;
+  margin-bottom: var(--spacing-sm);
+}
+
+.progress-value.streak {
+  font-size: var(--font-size-3xl);
+  color: var(--color-warning);
+}
+
+.progress-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: var(--line-height-tight);
+}
+
+.leaderboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-base);
+}
+
+.leaderboard-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-base);
+  background-color: var(--color-light-gray);
+  border-radius: var(--border-radius-base);
+  transition: background-color var(--transition-fast);
+}
+
+.leaderboard-item:hover {
+  background-color: #f0f2f5;
+}
+
+.leaderboard-item:hover .solver-name {
+  color: #000000;
+}
+
+.rank-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: var(--color-primary-blue);
+  color: var(--color-white);
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+  flex-shrink: 0;
+}
+
+.rank-badge:nth-child(1) {
+  background-color: #fbbf24;
+  color: #1f2937;
+}
+
+.leaderboard-item:first-child .rank-badge {
+  background-color: #fbbf24;
+  color: #1f2937;
+}
+
+.leaderboard-item:nth-child(2) .rank-badge {
+  background-color: #c0c0c0;
+  color: #1f2937;
+}
+
+.leaderboard-item:nth-child(3) .rank-badge {
+  background-color: #cd7f32;
+  color: #ffffff;
+}
+
+.solver-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-base);
+  flex: 1;
+}
+
+.solver-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: var(--color-primary-blue);
+  color: var(--color-white);
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  flex-shrink: 0;
+}
+
+.solver-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.solver-name {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-black);
+}
+.solver-name :hover {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #000000;
+}
+.solver-score {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-primary-blue);
+  min-width: 50px;
+  text-align: right;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    flex-direction: row;
+    gap: var(--spacing-lg);
+  }
+
+  .progress-card,
+  .leaderboard-card {
+    flex: 1;
+    padding: var(--spacing-lg);
+  }
+
+  .card-title {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .progress-grid {
+    gap: var(--spacing-base);
+  }
+
+  .progress-item {
+    padding: var(--spacing-base);
+  }
+
+  .progress-value {
+    font-size: var(--font-size-xl);
+  }
+
+  .progress-label {
+    font-size: var(--font-size-xs);
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    flex-direction: column;
+  }
+
+  .progress-card,
+  .leaderboard-card {
+    padding: var(--spacing-lg);
+  }
+
+  .progress-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .leaderboard-list {
+    gap: var(--spacing-sm);
+  }
+
+  .leaderboard-item {
+    padding: var(--spacing-sm) var(--spacing-base);
+  }
+
+  .solver-name {
+    font-size: var(--font-size-xs);
+  }
+
+  .solver-score {
+    font-size: var(--font-size-sm);
+  }
+}

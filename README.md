@@ -1,125 +1,91 @@
-# Question of the Day (QOTD) API
+# TechLearn QOTD API
 
-A production-grade, scalable REST API built with Node.js, Express, and MongoDB.
+A high-performance, scalable backend for the "Question of the Day" platform, built with Node.js, Express, and MongoDB.
 
 ## Architecture
-This project follows a strict **Service-Repository Pattern** to ensure scalability and maintainability:
-- **Controller Layer**: Handles HTTP requests/responses and input validation.
-- **Service Layer**: Contains business logic (Evaluation, Stats processing, Date logic).
-- **Repository Layer**: Abducts data access. Supports switching between **JSON** (Local) and **MongoDB** (Production) via configuration.
-- **Scalability**:
-    - **Stateless API**: The application server is stateless, allowing for horizontal scaling behind a Load Balancer.
-    - **Database Indexing**: Compound indexes (`score/timestamp` and `questionId/status`) allow for O(log N) retrieval of leaderboards and stats.
 
-## Tech Stack
-- **Runtime**: Node.js (ES Modules)
-- **Framework**: Express.js
-- **Database**: MongoDB (Mongoose) with JSON fallback
-- **Validation**: Zod
-- **Security**: Helmet, CORS
-- **Logging**: Morgan
+The system adheres to a strict **Controller-Service-Repository** architecture to ensure separation of concerns, maintainability, and testability.
 
-## API Documentation
+1.  **Controller Layer**: Handles HTTP requests, input validation (Zod), and response formatting. It delegates business logic to the Service layer.
+2.  **Service Layer**: Contains core business logic, including submission evaluation, leaderboard aggregation, and user statistics. It interacts with the Repository layer for data access.
+3.  **Repository Layer**: Abstracts the data access logic. This allows the application to switch between different data sources (e.g., MongoDB, PostgreSQL, In-Memory JSON) without modifying the business logic.
 
-### 1. Get Daily Question
-Retrieves the programming challenge for the current date (DD-MM-YYYY).
+## Integration Approach
 
-- **Endpoint**: `GET /api/v1/qotd`
-- **Response**:
-  ```json
-  {
-    "id": "qotd-001",
-    "date": "31-01-2026",
-    "title": "Two Sum",
-    "difficulty": "Easy",
-    "problemStatement": "Given an array...",
-    "hints": ["Try using a hash map...", "Time complexity O(n)"]
-  }
-  ```
+### Mock Execution Engine
+To optimize costs while providing a realistic user experience, the system implements a **Mock Execution Engine** for code submissions. Instead of provisioning expensive sandboxed environments (e.g., Docker containers per submission), the system:
+1.  Accepts user code and language.
+2.  Parses the code to identify structural patterns relevant to the problem's expected solution.
+3.  Simulates execution against a set of predefined test cases stored in the `Question` model.
+4.  Returns detailed, structured results (`status`, `output`, `executionTime`, `memoryUsage`, `testResults`) that mimic a real judgment system (e.g., Judge0).
 
-### 2. Submit Solution
-Evaluates a user submission.
+This approach allows for immediate feedback and comprehensive frontend testing without the operational overhead and security risks of arbitrary code execution.
 
-- **Endpoint**: `POST /api/v1/submissions`
-- **Body**:
-  ```json
-  {
-    "questionId": "qotd-001",
-    "userId": "user_123",
-    "code": "def solve(): return [0,1]",
-    "language": "python",
-    "userOutput": "0,1"
-  }
-  ```
-- **Response**:
-  ```json
-  {
-    "status": "correct",
-    "message": "Test cases passed!"
-  }
-  ```
+## Scalability Strategy
 
-### 3. Get Leaderboard
-Returns the top 10 users sorted by Score (Descending) and Timestamp.
+1.  **Stateless Architecture**: The API is fully stateless, allowing for horizontal scaling across multiple instances or containers.
+2.  **Database Indexing**: MongoDB collections are indexed on critical fields (`userId`, `questionId`, `difficulty`, `status`) to ensure sub-millisecond query performance for leaderboards and user stats.
+3.  **Aggregation Pipelines**: Complex data retrieval, such as leaderboard generation, is offloaded to the database via optimized Aggregation Pipelines, reducing application memory footprint.
 
-- **Endpoint**: `GET /api/v1/leaderboard`
-- **Response**:
-  ```json
-  [
-    { "rank": 1, "username": "algo_king", "score": 150, "time": "10:48:48" },
-    { "rank": 2, "username": "python_guru", "score": 145, "time": "10:47:48" }
-  ]
-  ```
+## Cost Optimization
 
-### 4. Get Statistics
-Returns submission statistics for a question.
+*   **Mock Execution**: Eliminates compute costs associated with running untrusted user code.
+*   **Efficient Data Models**: Normalized schema design reduces storage redundancy.
+*   **Rate Limiting**: Implemented to prevent abuse and manage resource consumption.
 
-- **Endpoint**: `GET /api/v1/stats/:questionId`
-- **Response**:
-  ```json
-  {
-    "questionId": "qotd-001",
-    "totalAttempts": 100,
-    "successCount": 97,
-    "successRate": "97.00%"
-  }
-  ```
+## Prerequisites
 
-## Setup Instructions
+*   Node.js v18+
+*   MongoDB v6+ (or compatible Docker container)
+*   Docker & Docker Compose (optional)
+
+## Environment Setup
+
+Create a `.env` file in the root directory:
+
+```bash
+PORT=3000
+DB_TYPE=mongo
+MONGODB_URI=mongodb://localhost:27017/techlearn_qotd
+```
+
+## Installation & Running
 
 ### Local Development
-1.  **Install Dependencies**:
+
+1.  Install dependencies:
     ```bash
     npm install
     ```
-2.  **Environment Setup**:
-    Create a `.env` file based on `.env.example`.
-    ```ini
-    DB_TYPE=mongodb
-    MONGODB_URI=mongodb://localhost:27017/qotd
-    ```
-3.  **Seed Database**:
-    ```bash
-    node scripts/seed-leaderboard.js
-    ```
-4.  **Run Server**:
-    ```bash
-    npm start
-    ```
-5.  **Browser Interface**:
-    Open [http://localhost:3000](http://localhost:3000) to view the Question and submit answers via the UI.
 
-### Deployment (Railway/Render)
-1.  Push the repository to GitHub.
-2.  Connect the repository to your hosting provider.
-3.  Add a MongoDB service (e.g., Railway MongoDB).
-4.  Set the Environment Variables:
-    - `DB_TYPE`: `mongodb`
-    - `MONGODB_URI`: `[Your Connection String]`
-    - `NODE_ENV`: `production`
+2.  Seed the database (Initial Setup):
+    ```bash
+    npm run seed
+    ```
 
-## Future Improvements
-- **Authentication**: Implement JWT (JSON Web Tokens) for secure user sessions.
-- **Caching**: Integrate Redis to cache the Leaderboard and QOTD responses for higher throughput.
-- **Dockerization**: Create a Dockerfile and docker-compose.yml for containerized deployment.
-- **Code Execution**: Integrate a secure sandbox (e.g., Judge0) to safely execute user code instead of mock evaluation.
+3.  Start the development server:
+    ```bash
+    npm run dev
+    ```
+
+### Docker Deployment
+
+1.  Build the image:
+    ```bash
+    docker build -t techlearn-api .
+    ```
+
+2.  Run the container:
+    ```bash
+    docker run -p 3000:3000 --env-file .env techlearn-api
+    ```
+
+## API Documentation
+
+### Key Endpoints
+
+*   `GET /api/v1/qotd` - Fetch the daily challenge.
+*   `POST /api/v1/run` - Dry-run execution of code against test cases.
+*   `POST /api/v1/submissions` - Submit a solution for scoring.
+*   `GET /api/v1/leaderboard` - Retrieve the global leaderboard.
+*   `GET /api/v1/stats/:userId` - Get user-specific statistics.
