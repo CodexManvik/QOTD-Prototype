@@ -1,30 +1,31 @@
 import ThemeToggle from './ThemeToggle';
 import './Navbar.css';
+import { Link, NavLink } from 'react-router-dom';
 
 export default function Navbar() {
   const navItems = [
-    { label: 'Home', href: '#' },
-    { label: 'QOTD', href: '#', active: true },
-    { label: 'Practice', href: '#' },
-    { label: 'Interview Prep', href: '#' },
+    { label: 'Home', href: '/' },
+    { label: 'QOTD', href: '/qotd' },
+    { label: 'Practice', href: '/practice' },
+    { label: 'Interview Prep', href: '/interview' },
   ];
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <a href="/" className="navbar-logo">
+        <Link to="/" className="navbar-logo">
           <img src="/logo.png" alt="TLS Logo" className="logo-image" />
-        </a>
+        </Link>
 
         <div className="pill-nav">
           {navItems.map((item) => (
-            <a
+            <NavLink
               key={item.label}
-              href={item.href}
-              className={`pill-nav-item ${item.active ? 'active' : ''}`}
+              to={item.href}
+              className={({ isActive }) => `pill-nav-item ${isActive ? 'active' : ''}`}
             >
               {item.label}
-            </a>
+            </NavLink>
           ))}
         </div>
 

@@ -1,3 +1,4 @@
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import PageHeader from './components/PageHeader';
 import QuestionCard from './components/QuestionCard';
@@ -5,6 +6,7 @@ import CodeEditor from './components/CodeEditor';
 import Sidebar from './components/Sidebar';
 import DailyCTA from './components/DailyCTA';
 import ClickSpark from './components/ClickSpark';
+import Home from './components/home';
 import './App.css';
 
 export default function App() {
@@ -12,21 +14,31 @@ export default function App() {
     <ClickSpark>
       <div className="app">
         <Navbar />
-        <PageHeader />
-      <main className="main-content">
-        <div className="content-container">
-          <div className="left-column">
-            <QuestionCard />
-          </div>
-          <div className="center-column">
-            <CodeEditor />
-          </div>
-          <div className="right-column">
-            <Sidebar />
-          </div>
-        </div>
-      </main>
-      <DailyCTA />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/qotd"
+            element={
+              <>
+                <PageHeader />
+                <main className="main-content">
+                  <div className="content-container">
+                    <div className="left-column">
+                      <QuestionCard />
+                    </div>
+                    <div className="center-column">
+                      <CodeEditor />
+                    </div>
+                    <div className="right-column">
+                      <Sidebar />
+                    </div>
+                  </div>
+                </main>
+                <DailyCTA />
+              </>
+            }
+          />
+        </Routes>
       </div>
     </ClickSpark>
   );
