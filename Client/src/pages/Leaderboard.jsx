@@ -1,7 +1,4 @@
 import { useState } from 'react';
-<<<<<<< HEAD
-import { Trophy, Medal, Crown, ChevronUp, ChevronDown } from 'lucide-react';
-=======
 import { 
     Trophy, 
     Crown, 
@@ -12,7 +9,6 @@ import {
     Zap, 
     Target 
 } from 'lucide-react';
->>>>>>> b24bfbe4ad4c6179ab113a0f3cdbf3203e843238
 import './Leaderboard.css';
 
 export default function Leaderboard() {
@@ -41,34 +37,6 @@ export default function Leaderboard() {
     };
 
     return (
-<<<<<<< HEAD
-            <main className="leaderboard-page">
-                <div className="leaderboard-container">
-                    <header className="leaderboard-header">
-                        <div className="header-text">
-                            <h1><Trophy size={32} /> Global Leaderboard</h1>
-                            <p>See how you stack up against the best coders</p>
-                        </div>
-                        <div className="filter-tabs">
-                            <button className={filter === 'all' ? 'active' : ''} onClick={() => setFilter('all')}>All Time</button>
-                            <button className={filter === 'month' ? 'active' : ''} onClick={() => setFilter('month')}>This Month</button>
-                            <button className={filter === 'week' ? 'active' : ''} onClick={() => setFilter('week')}>This Week</button>
-                        </div>
-                    </header>
-
-                    <div className="top-three">
-                        {leaderboardData.slice(0, 3).map((user, index) => (
-                            <div key={user.rank} className={`podium-card rank-${user.rank}`}>
-                                <div className="podium-rank">{getRankIcon(user.rank)}</div>
-                                <div className="podium-avatar">{user.name.split(' ').map(n => n[0]).join('')}</div>
-                                <div className="podium-name">{user.name}</div>
-                                <div className="podium-score">{user.score.toLocaleString()} pts</div>
-                                <div className="podium-stats">
-                                    <span>{user.solved} solved</span>
-                                    <span>🔥 {user.streak} days</span>
-                                </div>
-                            </div>
-=======
         <div className="leaderboard-page">
             <div className="leaderboard-container">
                 
@@ -94,13 +62,9 @@ export default function Leaderboard() {
                             >
                                 {tab.label}
                             </button>
->>>>>>> b24bfbe4ad4c6179ab113a0f3cdbf3203e843238
                         ))}
                     </div>
                 </div>
-<<<<<<< HEAD
-            </main>
-=======
 
                 {/* Top 3 Podium */}
                 <div className="top-three">
@@ -168,6 +132,5 @@ export default function Leaderboard() {
 
             </div>
         </div>
->>>>>>> b24bfbe4ad4c6179ab113a0f3cdbf3203e843238
     );
 }

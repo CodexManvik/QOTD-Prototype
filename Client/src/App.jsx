@@ -22,7 +22,7 @@ export default function App() {
             path="/qotd"
             element={
               <>
-                <PageHeader />
+               <PageHeader /> 
                 <main className="main-content">
                   <div className="content-container">
                     <div className="left-column">
