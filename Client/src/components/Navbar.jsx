@@ -1,3 +1,4 @@
+import ThemeToggle from './ThemeToggle';
 import './Navbar.css';
 
 export default function Navbar() {
@@ -11,9 +12,9 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <div className="navbar-logo">
-          <span className="logo-text">tls</span>
-        </div>
+        <a href="/" className="navbar-logo">
+          <img src="/logo.png" alt="TLS Logo" className="logo-image" />
+        </a>
 
         <div className="pill-nav">
           {navItems.map((item) => (
@@ -25,6 +26,10 @@ export default function Navbar() {
               {item.label}
             </a>
           ))}
+        </div>
+
+        <div className="nav-right">
+          <ThemeToggle />
         </div>
       </div>
     </nav>
