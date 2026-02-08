@@ -1,0 +1,16 @@
+{
+    "name": "qotd-monorepo",
+    "private": true,
+    "workspaces": [
+        "Server",
+        "Client"
+    ],
+    "scripts": {
+        "install:all": "npm install",
+        "dev:server": "npm run dev --workspace=qotd-api",
+        "dev:client": "npm run dev --workspace=tls"
+    },
+    "engines": {
+        "node": ">=20.0.0"
+    }
+}
