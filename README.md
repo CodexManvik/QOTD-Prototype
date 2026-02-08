@@ -79,7 +79,7 @@ Every architectural decision was made to minimize cost while maximizing function
 -   **Hosting**: The monorepo structure allows deployment on PaaS free tiers (Railway/Render) which often support multi-service builds from a single repo.
 -   **Database**: Using JSON file storage for the prototype eliminates the cost of a managed database instance (approx. $15-20/mo saved) while verifying the data schema.
 -   **Stateless Backend**: The API is stateless (JWT), meaning we don't need expensive sticky sessions or large Redis clusters for session management.
--   **Frontend Serving**: The frontend is built to robust static files, which can be hosted for free on global CDNs (Cloudflare Pages, Vercel), offloading traffic from the backend.
+-   **Frontend Serving**: The frontend is built to robust static files, which can be hosted for free on global CDNs, offloading traffic from the backend.
 
 ---
 
