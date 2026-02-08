@@ -37,17 +37,7 @@ The system follows a modern, decoupled **Monorepo** structure, designed for rapi
 
 ---
 
-## 🔌 Integration Approach
-
-The integration between frontend and backend is designed to be **loosely coupled**:
-
--   **API Contract**: The backend exposes a strictly typed REST API (`/api/v1`). The frontend consumes these endpoints via a centralized `authApi.js` service, ensuring consistent error handling and token management.
--   **Environment Agnostic**: Configuration (API URL, Port, DB Type) is injected via environment variables (`VITE_API_URL`, `PORT`, `DB_TYPE`), making the app deployable anywhere (Local, Docker, Cloud) without code changes.
--   **Monorepo Strategy**: Both client and server reside in the same repository, simplifying version control and ensuring that frontend changes which depend on backend updates are committed together.
-
----
-
-## � API Endpoints
+##  API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -57,6 +47,16 @@ The integration between frontend and backend is designed to be **loosely coupled
 | POST | `/api/v1/submissions` | Submit answer |
 | GET | `/api/v1/leaderboard` | Daily leaderboard |
 | GET | `/api/v1/solution/:id` | View solution (paid) |
+
+---
+
+## 🔌 Integration Approach
+
+The integration between frontend and backend is designed to be **loosely coupled**:
+
+-   **API Contract**: The backend exposes a strictly typed REST API (`/api/v1`). The frontend consumes these endpoints via a centralized `authApi.js` service, ensuring consistent error handling and token management.
+-   **Environment Agnostic**: Configuration (API URL, Port, DB Type) is injected via environment variables (`VITE_API_URL`, `PORT`, `DB_TYPE`), making the app deployable anywhere (Local, Docker, Cloud) without code changes.
+-   **Monorepo Strategy**: Both client and server reside in the same repository, simplifying version control and ensuring that frontend changes which depend on backend updates are committed together.
 
 ---
 
