@@ -12,7 +12,8 @@ cd Server && npm install && npm run dev
 cd Client && npm install && npm run dev
 ```
 
-**Access:** http://localhost:5173
+**Access (Local):** http://localhost:5173
+**Access (Production):** https://imaginative-cat-production.up.railway.app/
 
 ---
 
