@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 import {
     Trophy,
     Clock,
@@ -12,11 +13,16 @@ import {
     ArrowUpRight,
     MoreHorizontal,
     Activity,
-    CheckCircle2
+    CheckCircle2,
+    User,
+    Star,
+    Shield
 } from 'lucide-react';
 import './Dashboard.css';
 
 export default function Dashboard() {
+    const { user, isAuthenticated, role } = useAuth();
+
     const [stats] = useState({
         totalSolved: 42,
         currentStreak: 5,
@@ -43,15 +49,37 @@ export default function Dashboard() {
         { id: 4, name: 'Marathon', icon: Trophy, unlocked: false, level: 0 },
     ];
 
+    const getRoleBadge = () => {
+        switch (role) {
+            case 'admin':
+                return <span className="role-badge-dash admin"><Shield size={14} /> Admin</span>;
+            case 'paid':
+                return <span className="role-badge-dash paid"><Star size={14} /> Premium</span>;
+            default:
+                return <span className="role-badge-dash free"><User size={14} /> Free</span>;
+        }
+    };
+
+    const getRoleLimits = () => {
+        switch (role) {
+            case 'admin': return { runs: '∞', submissions: '∞' };
+            case 'paid': return { runs: '4/day', submissions: '1/day' };
+            default: return { runs: '2/day', submissions: '1/day' };
+        }
+    };
+
+    const limits = getRoleLimits();
+
     return (
         <div className="dashboard-page">
             <div className="dashboard-layout">
                 <header className="dash-header">
                     <div className="header-left">
-                        <span className="greeting">Good evening, Alex</span>
+                        <span className="greeting">Good evening, {user?.name || 'Guest'}</span>
                         <h1>Overview</h1>
                     </div>
                     <div className="header-right">
+                        {isAuthenticated && getRoleBadge()}
                         <button className="secondary-btn">
                             <Calendar size={18} />
                             <span>Feb 2025</span>
@@ -62,6 +90,31 @@ export default function Dashboard() {
                         </button>
                     </div>
                 </header>
+
+                {/* Account Info Card - only show if logged in */}
+                {isAuthenticated && (
+                    <div className="account-info-card">
+                        <div className="account-details">
+                            <div className="account-avatar">
+                                {user?.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'U'}
+                            </div>
+                            <div className="account-text">
+                                <span className="account-name">{user?.name}</span>
+                                <span className="account-email">{user?.email}</span>
+                            </div>
+                        </div>
+                        <div className="account-limits">
+                            <div className="limit-item">
+                                <span className="limit-label">Daily Runs</span>
+                                <span className="limit-value">{limits.runs}</span>
+                            </div>
+                            <div className="limit-item">
+                                <span className="limit-label">Submissions</span>
+                                <span className="limit-value">{limits.submissions}</span>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {/* Hero Stats Area */}
                 <div className="stats-showcase">
@@ -80,7 +133,7 @@ export default function Dashboard() {
                         </div>
                         <div className="hero-graph">
                             {[40, 60, 45, 70, 50, 80, 65].map((h, i) => (
-                                <div key={i} className="bar" style={{height: `${h}%`, opacity: i === 6 ? 1 : 0.4}}></div>
+                                <div key={i} className="bar" style={{ height: `${h}%`, opacity: i === 6 ? 1 : 0.4 }}></div>
                             ))}
                         </div>
                     </div>
@@ -135,7 +188,7 @@ export default function Dashboard() {
                                         <span className="diff-nums">{stats.easyCount} <span className="total">/ 50</span></span>
                                     </div>
                                     <div className="progress-rail">
-                                        <div className="progress-fill easy" style={{width: '50%'}}></div>
+                                        <div className="progress-fill easy" style={{ width: '50%' }}></div>
                                     </div>
                                 </div>
                                 <div className="diff-row">
@@ -144,7 +197,7 @@ export default function Dashboard() {
                                         <span className="diff-nums">{stats.mediumCount} <span className="total">/ 30</span></span>
                                     </div>
                                     <div className="progress-rail">
-                                        <div className="progress-fill medium" style={{width: '45%'}}></div>
+                                        <div className="progress-fill medium" style={{ width: '45%' }}></div>
                                     </div>
                                 </div>
                                 <div className="diff-row">
@@ -153,7 +206,7 @@ export default function Dashboard() {
                                         <span className="diff-nums">{stats.hardCount} <span className="total">/ 20</span></span>
                                     </div>
                                     <div className="progress-rail">
-                                        <div className="progress-fill hard" style={{width: '15%'}}></div>
+                                        <div className="progress-fill hard" style={{ width: '15%' }}></div>
                                     </div>
                                 </div>
                             </div>

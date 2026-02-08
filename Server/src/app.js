@@ -3,6 +3,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
 import apiRoutes from './routes/api.routes.js';
+import { authMiddleware } from './middlewares/auth.middleware.js';
 
 const app = express();
 
@@ -14,9 +15,8 @@ app.use(morgan('combined'));
 // Body Parser
 app.use(express.json());
 
-// Mock Auth
-import { mockAuth } from './middlewares/mockAuth.middleware.js';
-app.use(mockAuth);
+// JWT Auth Middleware (replaces mockAuth, maintains backward compatibility)
+app.use(authMiddleware);
 
 // Static Files
 app.use(express.static('public'));

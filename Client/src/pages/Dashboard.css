@@ -1,14 +1,15 @@
 /* --- Variables & Theming --- */
 :root {
     /* Core Palette - Light Mode (Luxurious Feel) */
-    --bg-page: #f8fafc; /* Subtle cool gray, not stark white */
+    --bg-page: #f8fafc;
+    /* Subtle cool gray, not stark white */
     --bg-card: #ffffff;
     --bg-card-hover: #ffffff;
-    
+
     --text-primary: #0f172a;
     --text-secondary: #64748b;
     --text-tertiary: #94a3b8;
-    
+
     --border-subtle: #e2e8f0;
     --border-highlight: #cbd5e1;
 
@@ -33,22 +34,23 @@
 
 /* Dark Mode Overrides */
 .dark {
-    --bg-page: #0b0f19; /* Deep, rich black/blue */
+    --bg-page: #0b0f19;
+    /* Deep, rich black/blue */
     --bg-card: #111827;
     --bg-card-hover: #1f2937;
-    
+
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
     --text-tertiary: #64748b;
-    
+
     --border-subtle: #1e293b;
     --border-highlight: #334155;
-    
+
     /* Shadows are replaced by glow/borders in dark mode */
     --shadow-sm: none;
     --shadow-card: none;
     --shadow-float: 0 0 0 1px #334155;
-    
+
     --grad-hero: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
     --grad-blue: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%);
 }
@@ -64,7 +66,8 @@
 }
 
 .dashboard-layout {
-    max-width: 1100px; /* Tighter width for better reading */
+    max-width: 1100px;
+    /* Tighter width for better reading */
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -97,6 +100,110 @@
 .header-right {
     display: flex;
     gap: 0.75rem;
+    align-items: center;
+}
+
+/* Role Badges in Dashboard */
+.role-badge-dash {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.role-badge-dash.free {
+    background: var(--bg-page);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+}
+
+.role-badge-dash.paid {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #78350f;
+}
+
+.role-badge-dash.admin {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    color: white;
+}
+
+/* Account Info Card */
+.account-info-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-card);
+}
+
+.account-details {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.account-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--accent-blue);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.account-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.account-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.account-email {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.account-limits {
+    display: flex;
+    gap: 2rem;
+}
+
+.limit-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.limit-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.limit-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent-blue);
 }
 
 button {
@@ -121,7 +228,8 @@ button {
 }
 
 .primary-btn {
-    background: var(--text-primary); /* Inverted for premium feel */
+    background: var(--text-primary);
+    /* Inverted for premium feel */
     color: var(--bg-page);
     padding: 0.6rem 1.25rem;
     border-radius: 10px;
@@ -171,8 +279,13 @@ button {
     overflow: hidden;
 }
 
-.hero-card .label { color: rgba(255, 255, 255, 0.7); }
-.hero-card .value { color: white; }
+.hero-card .label {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.hero-card .value {
+    color: white;
+}
 
 .card-content {
     display: flex;
@@ -258,9 +371,20 @@ button {
     justify-content: center;
 }
 
-.icon-mini.blue { background: rgba(59, 130, 246, 0.1); color: var(--accent-blue); }
-.icon-mini.gold { background: rgba(245, 158, 11, 0.1); color: var(--accent-gold); }
-.icon-mini.purple { background: rgba(99, 102, 241, 0.1); color: var(--accent-indigo); }
+.icon-mini.blue {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--accent-blue);
+}
+
+.icon-mini.gold {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--accent-gold);
+}
+
+.icon-mini.purple {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--accent-indigo);
+}
 
 .card-body .value {
     font-size: 1.75rem;
@@ -292,7 +416,8 @@ button {
     gap: 1.5rem;
 }
 
-.col-left, .col-right {
+.col-left,
+.col-right {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -337,7 +462,9 @@ button {
     margin-bottom: 1.25rem;
 }
 
-.diff-row:last-child { margin-bottom: 0; }
+.diff-row:last-child {
+    margin-bottom: 0;
+}
 
 .diff-meta {
     display: flex;
@@ -352,9 +479,20 @@ button {
     border-radius: 6px;
 }
 
-.diff-badge.easy { background: rgba(16, 185, 129, 0.1); color: var(--accent-success); }
-.diff-badge.medium { background: rgba(245, 158, 11, 0.1); color: var(--accent-warning); }
-.diff-badge.hard { background: rgba(239, 68, 68, 0.1); color: var(--accent-danger); }
+.diff-badge.easy {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--accent-success);
+}
+
+.diff-badge.medium {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--accent-warning);
+}
+
+.diff-badge.hard {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--accent-danger);
+}
 
 .diff-nums {
     font-size: 0.9rem;
@@ -379,9 +517,17 @@ button {
     border-radius: 4px;
 }
 
-.progress-fill.easy { background: var(--accent-success); }
-.progress-fill.medium { background: var(--accent-warning); }
-.progress-fill.hard { background: var(--accent-danger); }
+.progress-fill.easy {
+    background: var(--accent-success);
+}
+
+.progress-fill.medium {
+    background: var(--accent-warning);
+}
+
+.progress-fill.hard {
+    background: var(--accent-danger);
+}
 
 /* Activity Feed */
 .feed-item {
@@ -391,8 +537,14 @@ button {
     border-bottom: 1px solid var(--border-subtle);
 }
 
-.feed-item:last-child { border-bottom: none; padding-bottom: 0; }
-.feed-item:first-child { padding-top: 0; }
+.feed-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.feed-item:first-child {
+    padding-top: 0;
+}
 
 .status-indicator {
     width: 32px;
@@ -404,8 +556,15 @@ button {
     flex-shrink: 0;
 }
 
-.status-indicator.solved { background: rgba(16, 185, 129, 0.1); color: var(--accent-success); }
-.status-indicator.attempt { background: rgba(99, 102, 241, 0.1); color: var(--accent-indigo); }
+.status-indicator.solved {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--accent-success);
+}
+
+.status-indicator.attempt {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--accent-indigo);
+}
 
 .feed-content {
     flex: 1;
@@ -431,9 +590,18 @@ button {
     height: 6px;
     border-radius: 50%;
 }
-.diff-dot.easy { background: var(--accent-success); }
-.diff-dot.medium { background: var(--accent-warning); }
-.diff-dot.hard { background: var(--accent-danger); }
+
+.diff-dot.easy {
+    background: var(--accent-success);
+}
+
+.diff-dot.medium {
+    background: var(--accent-warning);
+}
+
+.diff-dot.hard {
+    background: var(--accent-danger);
+}
 
 .feed-time {
     font-size: 0.8rem;
@@ -471,7 +639,8 @@ button {
 .badge-circle {
     width: 60px;
     height: 60px;
-    border-radius: 50%; /* Hexagon feel via circle for now, simpler */
+    border-radius: 50%;
+    /* Hexagon feel via circle for now, simpler */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -513,17 +682,30 @@ button {
     .stats-showcase {
         grid-template-columns: 1fr 1fr;
     }
+
     .hero-card {
         grid-column: span 2;
     }
+
     .main-grid {
         grid-template-columns: 1fr;
     }
 }
 
 @media (max-width: 640px) {
-    .dashboard-page { padding: 1rem; }
-    .stats-showcase { grid-template-columns: 1fr; }
-    .hero-card { grid-column: span 1; }
-    .header-right { display: none; }
+    .dashboard-page {
+        padding: 1rem;
+    }
+
+    .stats-showcase {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-card {
+        grid-column: span 1;
+    }
+
+    .header-right {
+        display: none;
+    }
 }

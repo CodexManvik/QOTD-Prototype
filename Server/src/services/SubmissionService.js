@@ -1,38 +1,66 @@
-import Submission from '../models/Submission.js';
-import Question from '../models/Question.js';
-import User from '../models/User.js';
+import QuestionRepository from '../repositories/QuestionRepository.js';
+import jsonUserStore from '../repositories/JsonUserStore.js';
+import fs from 'fs/promises';
+import path from 'path';
+
+const SUBMISSIONS_PATH = path.resolve('data/submissions.json');
+
+// In-memory leaderboard cache
+const leaderboardCache = new Map();
+const CACHE_TTL_MS = 60 * 1000; // 1 minute
+
+/**
+ * Read submissions from JSON file
+ */
+async function readSubmissions() {
+    try {
+        const data = await fs.readFile(SUBMISSIONS_PATH, 'utf-8');
+        return JSON.parse(data);
+    } catch (error) {
+        if (error.code === 'ENOENT') {
+            return [];
+        }
+        console.error('Error reading submissions.json:', error);
+        return [];
+    }
+}
+
+/**
+ * Write submissions to JSON file
+ */
+async function writeSubmissions(submissions) {
+    try {
+        await fs.writeFile(SUBMISSIONS_PATH, JSON.stringify(submissions, null, 2), 'utf-8');
+    } catch (error) {
+        console.error('Error writing submissions.json:', error);
+        throw error;
+    }
+}
 
 class SubmissionService {
     /**
      * Evaluate a submission or run code.
      * @param {Object} data - { userId, questionId, code, language }
-     * @param {boolean} isDryRun - If true, do not save validation result to DB (just 'Run')
+     * @param {boolean} isDryRun - If true, do not save validation result (just 'Run')
      */
     async evaluateSubmission(data, isDryRun) {
         const { userId, questionId, code, language } = data;
 
         // 1. Fetch Question to compare output
-        const question = await Question.findOne({ id: questionId });
+        const question = await QuestionRepository.findById(questionId);
         if (!question) {
             throw new Error('Question not found');
         }
 
         // 2. Mock Execution Logic
-        // In a real system, we'd send `code` + `input` to a sandbox (e.g. Piston/Judge0).
-        // Here, we simulate simple PASS/FAIL based on a comment or rudimentary logic.
-
         let status = 'incorrect';
         let output = '';
         let score = 0;
 
-        // MOCK LOGIC: 
-        // If code contains the string "return <expectedOutput>", we consider it correct.
-        // Or if it's a dry run, we just return the sample output.
-
         const expected = question.expectedOutput || '';
 
         // Simulating processing delay
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 300));
 
         if (code.includes(expected) || code.includes('correct')) {
             status = 'correct';
@@ -54,20 +82,20 @@ class SubmissionService {
             return result;
         }
 
-        // 3. Save Submission (if not dry run)
-        // Check if user has already submitted successfully today?
-        // Rules: "Maximum 1 submission" is strictly enforced in UserService limits (checkLimit).
-        // So here we just save it.
-
-        const submission = await Submission.create({
+        // 3. Save Submission to JSON file
+        const submissions = await readSubmissions();
+        const submission = {
+            _id: String(submissions.length + 1),
             userId,
             questionId,
             code,
             language,
             status,
             score,
-            timestamp: new Date()
-        });
+            timestamp: new Date().toISOString()
+        };
+        submissions.push(submission);
+        await writeSubmissions(submissions);
 
         // 4. Return result with DB id
         return {
@@ -77,8 +105,10 @@ class SubmissionService {
     }
 
     async getStats(questionId) {
-        const total = await Submission.countDocuments({ questionId });
-        const correct = await Submission.countDocuments({ questionId, status: 'correct' });
+        const submissions = await readSubmissions();
+        const questionSubmissions = submissions.filter(s => s.questionId === questionId);
+        const total = questionSubmissions.length;
+        const correct = questionSubmissions.filter(s => s.status === 'correct').length;
 
         return {
             questionId,
@@ -89,134 +119,90 @@ class SubmissionService {
     }
 
     async getUserStats(userId) {
-        // Mock Streak Logic (or simple daily continuity check)
-        // For now, we'll aggregate total score and solved count.
+        const submissions = await readSubmissions();
+        const userSubmissions = submissions.filter(s => s.userId === userId && s.status === 'correct');
+        const user = await jsonUserStore.findOne({ userId });
 
-        const stats = await Submission.aggregate([
-            { $match: { userId, status: 'correct' } },
-            {
-                $group: {
-                    _id: null,
-                    totalScore: { $sum: '$score' },
-                    solvedCount: { $sum: 1 }
-                }
-            }
-        ]);
-
-        const user = await User.findOne({ userId });
-        const data = stats[0] || { totalScore: 0, solvedCount: 0 };
+        const totalScore = userSubmissions.reduce((sum, s) => sum + (s.score || 0), 0);
+        const solvedCount = userSubmissions.length;
 
         return {
             username: userId,
             role: user ? user.role : 'free',
-            totalScore: data.totalScore,
-            problemsSolved: data.solvedCount,
-            currentStreak: user ? (user.dailyActivity.submissions > 0 ? 1 : 0) : 0, // Simple mock streak
-            maxStreak: 5 // Mock value for "Paid" feature demo
+            totalScore,
+            problemsSolved: solvedCount,
+            currentStreak: user?.dailyActivity?.submissions > 0 ? 1 : 0,
+            maxStreak: 5 // Mock value
         };
     }
 
     async getLeaderboard(difficulty) {
-        // Simple In-Memory Cache Key
         const cacheKey = `leaderboard_${difficulty || 'all'}`;
 
-        // Helper: Generic in-memory cache (attached to class instance or module scope)
-        // For simplicity, attaching to 'this' if checked, else defining here won't work across requests easily if re-imported?
-        // Node modules are cached, so module-level var is fine.
-        if (!this.cache) this.cache = new Map();
-
-        const cached = this.cache.get(cacheKey);
-        if (cached && (Date.now() - cached.timestamp < 60000)) { // 1 min TTL
+        // Check cache
+        const cached = leaderboardCache.get(cacheKey);
+        if (cached && (Date.now() - cached.timestamp < CACHE_TTL_MS)) {
             return cached.data;
         }
 
-        // Daily Leaderboard: based on today's submissions
+        // Get today's submissions
         const startOfDay = new Date();
         startOfDay.setHours(0, 0, 0, 0);
-
         const endOfDay = new Date();
         endOfDay.setHours(23, 59, 59, 999);
 
-        // We need to join with User to get role (to filter out Free users if needed)
-        // or ensure `getLeaderboard` is only accessible to Paid?
-        // Requirement: "Access Rules... Free users: Can see score, Cannot appear on leaderboard"
+        const submissions = await readSubmissions();
+        const todaySubmissions = submissions.filter(s => {
+            const ts = new Date(s.timestamp);
+            return ts >= startOfDay && ts <= endOfDay && s.status === 'correct';
+        });
 
-        // So we must filter out users who are 'free' from the RESULTS, 
-        // OR we just don't show Free users in the list.
-        // Note: The User model has the role. Submission doesn't have role snapshot.
-        // We need to $lookup.
+        // Get all questions to filter by difficulty
+        const allQuestions = await QuestionRepository.findAll();
+        const questionMap = new Map(allQuestions.map(q => [q.id, q]));
 
-        const pipeline = [
-            {
-                $match: {
-                    timestamp: { $gte: startOfDay, $lte: endOfDay },
-                    status: 'correct'
-                }
-            },
-            // Filter by question difficulty via lookup?
-            // "Separate leaderboard for each difficulty".
-            // Since `Submission` links to `Question`, we need to inspect the Question's difficulty.
-            {
-                $lookup: {
-                    from: 'questions',
-                    localField: 'questionId',
-                    foreignField: 'id',
-                    as: 'question'
-                }
-            },
-            { $unwind: '$question' },
-            {
-                $match: {
-                    'question.difficulty': { $regex: new RegExp(`^${difficulty}$`, 'i') } // Case insensitive match
-                }
-            },
-            // Lookup User to filter out Free users
-            {
-                $lookup: {
-                    from: 'users',
-                    localField: 'userId', // Submission.userId (string)
-                    foreignField: 'userId', // User.userId (string)
-                    as: 'user'
-                }
-            },
-            { $unwind: '$user' },
-            {
-                $match: {
-                    'user.role': { $ne: 'free' } // Free users CANNOT appear on leaderboard
-                }
-            },
-            // Group by User to sum scores? OR just list submissions?
-            // "Leaderboard data... One entry per user?" Usually yes.
-            // If user solved multiple questions of same difficulty today (if possible), sum score.
-            // But requirement says "One question... global for the day". 
-            // So there is only ONE question per day. 
-            // So grouping isn't strictly necessary if only one Q per day.
-            // But let's act robustly.
-            {
-                $group: {
-                    _id: '$userId',
-                    totalScore: { $sum: '$score' }, // Summing if we have >1 Q
-                    latestSubmission: { $max: '$timestamp' },
-                    username: { $first: '$userId' } // In a real app we'd have a username field
-                }
-            },
-            { $sort: { totalScore: -1, latestSubmission: 1 } },
-            { $limit: 10 }
-        ];
+        // Filter by difficulty if specified
+        let filteredSubmissions = todaySubmissions;
+        if (difficulty) {
+            filteredSubmissions = todaySubmissions.filter(s => {
+                const q = questionMap.get(s.questionId);
+                return q && q.difficulty.toLowerCase() === difficulty.toLowerCase();
+            });
+        }
 
-        const result = await Submission.aggregate(pipeline);
+        // Group by user and sum scores
+        const userScores = new Map();
+        for (const s of filteredSubmissions) {
+            const user = await jsonUserStore.findOne({ userId: s.userId });
+            // Free users cannot appear on leaderboard
+            if (user && user.role === 'free') continue;
+
+            if (!userScores.has(s.userId)) {
+                userScores.set(s.userId, { totalScore: 0, latestSubmission: s.timestamp, username: s.userId });
+            }
+            const entry = userScores.get(s.userId);
+            entry.totalScore += s.score || 0;
+            if (new Date(s.timestamp) > new Date(entry.latestSubmission)) {
+                entry.latestSubmission = s.timestamp;
+            }
+        }
+
+        // Sort and limit
+        const result = Array.from(userScores.values())
+            .sort((a, b) => b.totalScore - a.totalScore || new Date(a.latestSubmission) - new Date(b.latestSubmission))
+            .slice(0, 10)
+            .map(entry => ({
+                _id: entry.username,
+                username: entry.username,
+                totalScore: entry.totalScore,
+                latestSubmission: entry.latestSubmission
+            }));
 
         // Cache result
-        this.cache.set(cacheKey, { timestamp: Date.now(), data: result });
+        leaderboardCache.set(cacheKey, { timestamp: Date.now(), data: result });
 
         return result;
     }
 }
 
-// Simple in-memory cache
-const leaderboardCache = new Map();
-const CACHE_TTL_MS = 60 * 1000; // 1 minute
-
-export default new SubmissionService(); // Export instance but we modify class definition below
-// Actually, easier to keep class structure clean. I will modify the method inside.
-
+export default new SubmissionService();

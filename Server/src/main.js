@@ -1,8 +1,14 @@
 import app from './app.js';
 import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
 import connectDB from './config/db.js';
 
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Load .env from project root (Server/src -> Server -> QOTD-Prototype)
+dotenv.config({ path: resolve(__dirname, '../../.env') });
 
 connectDB();
 

@@ -1,0 +1,55 @@
+[
+  {
+    "_id": "1",
+    "userId": "persistent_test_com",
+    "email": "persistent@test.com",
+    "password": "$2b$10$IxAKvOAFgbKliwA43vnJe.rfTAQA1uKM5.3h4DdByKPl./axZsq7.",
+    "name": "persistent",
+    "role": "paid",
+    "dailyActivity": {
+      "date": "2026-02-08",
+      "runs": 0,
+      "submissions": 0
+    },
+    "createdAt": "2026-02-08T09:29:54.637Z"
+  },
+  {
+    "_id": "2",
+    "userId": "finaltest_demo_com",
+    "email": "finaltest@demo.com",
+    "password": "$2b$10$P9plW7BCzeO8JwXnLFrqN.hZw4xerdShmEjz.LWJeeFNMgJlch4SS",
+    "name": "finaltest",
+    "role": "paid",
+    "dailyActivity": {
+      "date": "2026-02-08",
+      "runs": 0,
+      "submissions": 0
+    },
+    "createdAt": "2026-02-08T09:33:45.063Z"
+  },
+  {
+    "_id": "3",
+    "userId": "admin",
+    "role": "admin",
+    "dailyActivity": {
+      "date": "2026-02-08",
+      "runs": 0,
+      "submissions": 0
+    },
+    "createdAt": "2026-02-08T09:34:11.283Z"
+  },
+  {
+    "_id": "4",
+    "userId": "user_example_com",
+    "email": "user@example.com",
+    "password": "$2b$10$D5I2B3qvd.tbQcoUWevf3Oeedd6op9DJlwLG1tiQtvLMSYrAV5XWe",
+    "name": "user",
+    "role": "free",
+    "dailyActivity": {
+      "date": "2026-02-08",
+      "runs": 0,
+      "submissions": 0
+    },
+    "createdAt": "2026-02-08T09:41:47.177Z"
+  }
+]
