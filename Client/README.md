@@ -4,7 +4,13 @@ An interactive daily coding challenge platform designed to build consistent prob
 
 Developed as part of a technical internship assignment, this project demonstrates production-ready frontend practices with a focus on clean architecture, responsive design, and user engagement.
 
+## ASSETS & CREDITS
 
+Lottie animations created by talented designers:
+- [Graphic Room](https://iconscout.com/contributors/graphic-room)
+- [Danimotion](https://iconscout.com/contributors/danimotion)
+- [Graphichup](https://iconscout.com/contributors/graphichup)
+- [Nanoagency](https://iconscout.com/contributors/nanoagency)
 
 ✨ Features
 
