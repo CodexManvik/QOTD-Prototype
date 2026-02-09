@@ -27,6 +27,14 @@ The system follows a modern, decoupled **Monorepo** structure, designed for rapi
     -   **Role**: Handles user interaction, code editing, and API communication. Uses `Context API` for auth state management.
     -   **Deploy**: Static site served via Nginx/Node.js or CDN (Vercel/Netlify/Railway).
 
+    ## ASSETS & CREDITS
+
+Lottie animations created by talented designers:
+- [Graphic Room](https://iconscout.com/contributors/graphic-room)
+- [Danimotion](https://iconscout.com/contributors/danimotion)
+- [Graphichup](https://iconscout.com/contributors/graphichup)
+- [Nanoagency](https://iconscout.com/contributors/nanoagency)
+
 2.  **Backend (Server)**:
     -   **Tech Stack**: Node.js, Express.js.
     -   **Role**: RESTful API server handling authentication, question delivery, and submission processing.

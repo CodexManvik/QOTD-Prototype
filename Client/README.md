@@ -64,7 +64,13 @@ techlearn-qotd/
 - ✅ **Scalability** – Easy to extend and maintain
 - ✅ **Readability** – Self-documenting code patterns
 
----
+## ASSETS & CREDITS
+
+Lottie animations created by talented designers:
+- [Graphic Room](https://iconscout.com/contributors/graphic-room)
+- [Danimotion](https://iconscout.com/contributors/danimotion)
+- [Graphichup](https://iconscout.com/contributors/graphichup)
+- [Nanoagency](https://iconscout.com/contributors/nanoagency)
 
 ## 🚀 Getting Started
 
@@ -143,5 +149,8 @@ npm run build
 ```
 
 Other Options: AWS Amplify, Render, Railway, Cloudflare Pages
+
+
+
 
 
